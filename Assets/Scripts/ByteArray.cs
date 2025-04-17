@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ByteArray : MonoBehaviour
+public class ByteArray
 {
     /// <summary>
     /// 默认的字节数组大小
