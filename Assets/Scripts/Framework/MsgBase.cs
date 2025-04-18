@@ -66,6 +66,8 @@ public class MsgBase
         count = BitConverter.ToInt32(bytes, offset);
         offset += sizeof(int);
         string s = Encoding.UTF8.GetString(bytes, offset, count);
+        //count不仅要返回消息名的长度，还要返回之前的int的长度，作为总的数据长度
+        count += sizeof(int);
         return s;
     }
 }

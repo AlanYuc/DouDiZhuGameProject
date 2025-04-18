@@ -37,6 +37,10 @@ public static class NetManager
     /// </summary>
     private static int msgCuont;
     /// <summary>
+    /// 一帧处理消息的最大长度
+    /// </summary>
+    private static int processMsgCount;
+    /// <summary>
     ///连接状态
     /// </summary>
     public enum NetEvent
@@ -147,7 +151,7 @@ public static class NetManager
     /// </summary>
     /// <param name="msgName"></param>
     /// <param name="msgBase"></param>
-    public static void FireMsgListener(string msgName, MsgBase msgBase)
+    public static void FireMsg(string msgName, MsgBase msgBase)
     {
         if (msgListeners.ContainsKey(msgName))
         {
@@ -245,6 +249,7 @@ public static class NetManager
 
         msgList = new List<MsgBase>();
         msgCuont = 0;
+        processMsgCount = 10;
     }
     /// <summary>
     /// 发送消息
@@ -272,7 +277,7 @@ public static class NetManager
         int indexNum = sizeof(int) + nameBytes.Length + bodyBytes.Length;
         byte[] sendBytes = new byte[indexNum];
         int index = 0;
-        BitConverter.GetBytes(indexNum).CopyTo(sendBytes, index);
+        BitConverter.GetBytes(nameBytes.Length + bodyBytes.Length).CopyTo(sendBytes, index);
         index += sizeof(int);
         nameBytes.CopyTo(sendBytes, index);
         index += nameBytes.Length;
@@ -375,6 +380,86 @@ public static class NetManager
     /// </summary>
     public static void OnReceiveData()
     {
+        if (byteArray.Length < sizeof(int))
+        {
+            //读取的数据长度小于4，也就是连一个起始的int数据（分包粘包）都读不出来
+            return;
+        }
+        int readIndex = byteArray.readIndex;
 
+        //解析第一个分包粘包的数据，也就是数据的完整长度
+        int bodyLength = BitConverter.ToInt32(byteArray.bytes, readIndex);
+        if(byteArray.Length < sizeof(int) + bodyLength)
+        {
+            //出现分包情况，还有数据没读进来
+            return;
+        }
+
+        //解析消息名
+        readIndex += sizeof(int);
+        int nameCount;
+        string protocolName = MsgBase.DecodeProtocolName(byteArray.bytes, readIndex, out nameCount);
+        readIndex += nameCount;
+        if(protocolName == "")
+        {
+            Debug.Log("解析消息名失败");
+            return;
+        }
+
+        //解析消息体
+        int bodyCount = bodyLength - nameCount;
+        MsgBase msgBase = MsgBase.Decode(protocolName, byteArray.bytes, readIndex, bodyCount);
+        readIndex += bodyCount;
+        byteArray.readIndex = readIndex;
+        byteArray.MoveBytes();
+        lock (msgList)
+        {
+            msgList.Add(msgBase);
+        }
+        msgCuont++;
+        if (byteArray.Length > sizeof(int))
+        {
+            OnReceiveData();
+        }
+    }
+    /// <summary>
+    /// 消息处理，把消息放大msgList中处理，后续放到Update中执行
+    /// </summary>
+    public static void MsgUpdate()
+    {
+        if(msgCuont == 0)
+        {
+            //没有消息
+            return;
+        }
+        for(int i = 0; i < processMsgCount; i++)
+        {
+            MsgBase msgBase = null;
+            lock (msgList)
+            {
+                if (msgCuont > 0)
+                {
+                    //取出第一个消息
+                    msgBase = msgList[0];
+                    msgList.RemoveAt(0);
+                    msgCuont--;
+                }
+            }
+            if (msgBase != null)
+            {
+                FireMsg(msgBase.protocolName, msgBase);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    /// <summary>
+    /// 需要在在脚本中的Update中调用，确保每帧执行
+    /// </summary>
+    public static void Update()
+    {
+        MsgUpdate();
     }
 }
