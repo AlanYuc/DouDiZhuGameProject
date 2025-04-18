@@ -41,6 +41,22 @@ public static class NetManager
     /// </summary>
     private static int processMsgCount;
     /// <summary>
+    /// 是否启用心跳机制
+    /// </summary>
+    public static bool isUsePingPong;
+    /// <summary>
+    /// 心跳时间间隔
+    /// </summary>
+    public static int pingInterval;
+    /// <summary>
+    /// 上一次发送Ping协议的时间
+    /// </summary>
+    private static float lastPingTime;
+    /// <summary>
+    /// 上一次收到Pong协议的时间
+    /// </summary>
+    private static float lastPongTime;
+    /// <summary>
     ///连接状态
     /// </summary>
     public enum NetEvent
@@ -250,6 +266,16 @@ public static class NetManager
         msgList = new List<MsgBase>();
         msgCuont = 0;
         processMsgCount = 10;
+
+        isUsePingPong = true;
+        pingInterval = 30;
+        lastPingTime = Time.time;
+        lastPongTime = Time.time;
+
+        if (!msgListeners.ContainsKey("MsgPong"))
+        {
+            msgListeners.Add("MsgPong", OnMsgPong);
+        }
     }
     /// <summary>
     /// 发送消息
@@ -456,10 +482,44 @@ public static class NetManager
         }
     }
     /// <summary>
+    /// 发送Ping协议
+    /// </summary>
+    private static void PingUpdate()
+    {
+        if (!isUsePingPong)
+        {
+            //没启动心跳机制，直接返回
+            return;
+        }
+
+        //发送协议
+        if (Time.time - lastPingTime > pingInterval)
+        {
+            MsgPing msgPing = new MsgPing();
+            Send(msgPing);
+            lastPingTime = Time.time;
+        }
+
+        //在pingInterval * 4的固定时间内接收不到Pong协议，就断开
+        if(Time.time - lastPongTime> pingInterval * 4)
+        {
+            Close();
+        }
+    }
+    /// <summary>
     /// 需要在在脚本中的Update中调用，确保每帧执行
     /// </summary>
     public static void Update()
     {
         MsgUpdate();
+        PingUpdate();
+    }
+    /// <summary>
+    /// 接收到Pong消息后
+    /// </summary>
+    /// <param name="msgBase"></param>
+    public static void OnMsgPong(MsgBase msgBase)
+    {
+        lastPongTime = Time.time;
     }
 }
