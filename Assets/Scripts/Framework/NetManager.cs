@@ -23,7 +23,7 @@ public static class NetManager
     /// <summary>
     /// 是否正在连接
     /// </summary>
-    private static bool isConnecting;
+    public static bool isConnecting;
     /// <summary>
     /// 是否正在关闭
     /// </summary>
@@ -283,7 +283,7 @@ public static class NetManager
     /// <param name="msg">消息</param>
     public static void Send(MsgBase msg)
     {
-        if(socket == null || !socket.Connected)
+        if (socket == null || !socket.Connected)
         {
             return;
         }
@@ -319,10 +319,11 @@ public static class NetManager
             messageQueue.Enqueue(byteArray);
             count = messageQueue.Count;
         }
-        if(count == 1)
+        if (count == 1)
         {
             //发送消息
             socket.BeginSend(sendBytes, 0, sendBytes.Length, SocketFlags.None, SendCallBack, socket);
+            Debug.Log("消息发送成功");
         }
     }
     /// <summary>
@@ -334,28 +335,35 @@ public static class NetManager
         try
         {
             Socket socket = ar.AsyncState as Socket;
+            if(socket == null || !socket.Connected)
+            {
+                return;
+            }
             //EndSend返回发送了多少字节
             int count = socket.EndSend(ar);
+            
+            //ByteArray ba;要在lock外面创建，不然会出问题
+            ByteArray ba;
             lock (messageQueue)
             {
-                ByteArray byteArray = messageQueue.Peek();
+                ba = messageQueue.Peek();
             }
             //看当前的消息发送了多少，不够，就还的接着发
-            byteArray.readIndex += count;
-            if(byteArray.Length == 0)
+            ba.readIndex += count;
+            if (ba.Length == 0)
             {
                 lock (messageQueue)
                 {
                     //消息全部发完了,把消息移除
                     messageQueue.Dequeue();
                     //判断下一个消息
-                    byteArray = messageQueue.Peek();
+                    ba = messageQueue.Peek();
                 }
             }
             //继续发送
-            if (byteArray != null)
+            if (ba != null)
             {
-                socket.BeginSend(byteArray.bytes, byteArray.readIndex, byteArray.Length, SocketFlags.None, SendCallBack, socket);
+                socket.BeginSend(ba.bytes, ba.readIndex, ba.Length, SocketFlags.None, SendCallBack, socket);
             }
             else if (isClosing)
             {
@@ -491,7 +499,6 @@ public static class NetManager
             //没启动心跳机制，直接返回
             return;
         }
-
         //发送协议
         if (Time.time - lastPingTime > pingInterval)
         {
@@ -503,6 +510,7 @@ public static class NetManager
         //在pingInterval * 4的固定时间内接收不到Pong协议，就断开
         if(Time.time - lastPongTime> pingInterval * 4)
         {
+            Debug.Log("PingUpdate: 心跳时间过长，客户端主动断开连接");
             Close();
         }
     }
