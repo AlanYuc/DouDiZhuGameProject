@@ -68,8 +68,8 @@ public class ByteArray
         {
             Array.Copy(bytes, readIndex, bytes, 0, Length);
         }
-        readIndex = 0;
         writeIndex = Length;
+        readIndex = 0;
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ public class ByteArray
         byte[] newBytes = new byte[capacity];
         Array.Copy(bytes, readIndex, newBytes, 0, Length);
         bytes = newBytes;
-        readIndex = 0;
         writeIndex = Length;
+        readIndex = 0;
     }
 }
