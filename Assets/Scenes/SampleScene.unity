@@ -622,6 +622,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RegisterPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 836571031638687730, guid: 562e61c3308dbfc479c21803dffcfb34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2997936109742384888, guid: 562e61c3308dbfc479c21803dffcfb34, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
