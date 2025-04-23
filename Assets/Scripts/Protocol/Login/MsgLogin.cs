@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 public class MsgLogin : MsgBase
 {
-    public string userid;
-    public string password;
+    //客户端和服务器端的字段必须保持一致，这样才能成功解析出来数据
+    public string id;
+    public string pw;
     /// <summary>
     /// 服务端返回 账号密码是否正确
     /// </summary>

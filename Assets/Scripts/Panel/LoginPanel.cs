@@ -55,11 +55,11 @@ public class LoginPanel : BasePanel
             PanelManager.Open<TipPanel>("用户名和密码不能为空");
             return;
         }
-        
+
         //发送登录协议
         MsgLogin msgLogin = new MsgLogin();
-        msgLogin.userid = useridInput.text;
-        msgLogin.password = passwordInput.text;
+        msgLogin.id = useridInput.text;
+        msgLogin.pw = passwordInput.text;
         NetManager.Send(msgLogin);
     }
 
