@@ -46,9 +46,11 @@ public class LoginPanel : BasePanel
         //这里简化为只判断是否输入为空
         if(useridInput.text == "" || passwordInput.text == "")
         {
+            Debug.Log("LoginPanel.OnLoginClcik() : 输入不能为空");
             return;
         }
-
+        
+        //发送登录协议
         MsgLogin msgLogin = new MsgLogin();
         msgLogin.userid = useridInput.text;
         msgLogin.password = passwordInput.text;
