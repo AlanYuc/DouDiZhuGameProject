@@ -33,7 +33,7 @@ public class RegisterPanel : BasePanel
 
     public override void OnClose()
     {
-        
+        NetManager.RemoveMsgListener("MsgRegister", OnMsgRegister);
     }
 
     public void OnRegisterClick()
@@ -41,12 +41,14 @@ public class RegisterPanel : BasePanel
         if(useridInput.text == "" || passwordInput.text == "" || repeatPasswordInput.text == "")
         {
             Debug.Log("RegisterPanel.OnRegisterClick() : 输入不能为空");
+            PanelManager.Open<TipPanel>("用户名、密码和重复密码不能为空");
             return;
         }
 
         if(passwordInput.text != repeatPasswordInput.text)
         {
-            Debug.Log("RegisterPanel.OnRegisterClick() : 重复输入的密码错误");
+            Debug.Log("RegisterPanel.OnRegisterClick() : 两次输入的密码不一致");
+            PanelManager.Open<TipPanel>("两次输入的密码不一致");
             return;
         }
 
@@ -68,11 +70,13 @@ public class RegisterPanel : BasePanel
         if (msgRegister.result)
         {
             //注册成功
+            PanelManager.Open<TipPanel>("注册成功");
             Close();
         }
         else
         {
             //注册失败
+            PanelManager.Open<TipPanel>("注册失败");
         }
     }
 }

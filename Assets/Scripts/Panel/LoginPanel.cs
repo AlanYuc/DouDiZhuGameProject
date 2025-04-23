@@ -31,13 +31,18 @@ public class LoginPanel : BasePanel
         loginButton.onClick.AddListener(OnLoginClcik);
         registerButton.onClick.AddListener(OnRegisterClick);
 
+        NetManager.AddEventListener(NetManager.NetEvent.ConnectSuccess, OnConnectSuccess);
+        NetManager.AddEventListener(NetManager.NetEvent.ConnectFailed, OnConnectFail);
         //网络协议监听，接收服务端发回的登录、注册事件的结果
         NetManager.AddMsgListener("MsgLogin", OnMsgLogin);
+        NetManager.Connect("127.0.0.1", 8888);
     }
 
     public override void OnClose()
     {
-        
+        NetManager.RemoveEventListener(NetManager.NetEvent.ConnectSuccess, OnConnectSuccess);
+        NetManager.RemoveEventListener(NetManager.NetEvent.ConnectFailed, OnConnectFail);
+        NetManager.RemoveMsgListener("MsgLogin", OnMsgLogin);
     }
 
     public void OnLoginClcik()
@@ -47,6 +52,7 @@ public class LoginPanel : BasePanel
         if(useridInput.text == "" || passwordInput.text == "")
         {
             Debug.Log("LoginPanel.OnLoginClcik() : 输入不能为空");
+            PanelManager.Open<TipPanel>("用户名和密码不能为空");
             return;
         }
         
@@ -61,6 +67,7 @@ public class LoginPanel : BasePanel
     {
         //to do...
         //打开注册面板
+        PanelManager.Open<RegisterPanel>();
     }
 
     public void OnMsgLogin(MsgBase msgBase)
@@ -69,10 +76,22 @@ public class LoginPanel : BasePanel
         if (msgLogin.result)
         {
             //登录成功
+            PanelManager.Open<TipPanel>("登录成功");
         }
         else
         {
             //登录失败
+            PanelManager.Open<TipPanel>("登录失败");
         }
+    }
+
+    public void OnConnectSuccess(string err)
+    {
+        Debug.Log("LoginPanel.OnConnectSuccess() : 连接成功");
+    }
+    public void OnConnectFail(string err)
+    {
+        Debug.Log("LoginPanel.OnConnectFail() : 连接失败");
+        PanelManager.Open<TipPanel>("连接失败 : " + err);
     }
 }
