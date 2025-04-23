@@ -27,6 +27,10 @@ public class Test : MonoBehaviour
 
         //服务端测试
         NetManager.Connect("127.0.0.1", 8888);
+
+        //测试TipPanel的效果
+        //PanelManager.Init();
+        //PanelManager.Open<TipPanel>("hello");
     }
 
     private void Update()
