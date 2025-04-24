@@ -706,6 +706,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 1935272401834134249, guid: e6e798a867b23994a8fc66359946f943, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5139553215905619294, guid: e6e798a867b23994a8fc66359946f943, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.00013080989
