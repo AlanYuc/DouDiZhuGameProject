@@ -96,7 +96,7 @@ public class RoomListPanel : BasePanel
         {
             PanelManager.Open<TipPanel>("创建房间成功");
             //打开房间面板
-            //PanelManager.Open<RoomPanel>();
+            PanelManager.Open<RoomPanel>();
             //关闭当前的房间列表面板
             Close();
         }
@@ -141,7 +141,7 @@ public class RoomListPanel : BasePanel
         if (msgEnterRoom.result)
         {
             //打开所进入的房间面板
-            //PanelManager.Open<RoomPanel>();
+            PanelManager.Open<RoomPanel>();
             //关闭房间列表面板
             Close();
         }
