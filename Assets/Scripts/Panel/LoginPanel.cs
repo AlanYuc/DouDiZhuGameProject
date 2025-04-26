@@ -73,6 +73,9 @@ public class LoginPanel : BasePanel
         MsgLogin msgLogin = msgBase as MsgLogin;
         if (msgLogin.result)
         {
+            //获取登录玩家的id
+            GameManager.playerId = msgLogin.id;
+
             //登录成功
             PanelManager.Open<TipPanel>("登录成功");
             PanelManager.Open<RoomListPanel>();
