@@ -65,8 +65,6 @@ public class LoginPanel : BasePanel
 
     public void OnRegisterClick()
     {
-        //to do...
-        //´ò¿ª×¢²áÃæ°å
         PanelManager.Open<RegisterPanel>();
     }
 
