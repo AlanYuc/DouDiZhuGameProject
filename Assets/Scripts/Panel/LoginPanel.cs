@@ -78,6 +78,7 @@ public class LoginPanel : BasePanel
             //登录成功
             PanelManager.Open<TipPanel>("登录成功");
             PanelManager.Open<RoomListPanel>();
+            Close();
         }
         else
         {
