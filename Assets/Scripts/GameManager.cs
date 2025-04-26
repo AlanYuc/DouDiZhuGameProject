@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     /// 当前玩家是否为房主
     /// </summary>
     public static bool isHost;
+    /// <summary>
+    /// 通过Root来找当前场景激活的Panel
+    /// </summary>
+    private Transform root;
 
     void Start()
     {
@@ -20,6 +24,8 @@ public class GameManager : MonoBehaviour
 
         PanelManager.Init();
         PanelManager.Open<LoginPanel>();
+
+        root = GameObject.Find("Root").GetComponent<Transform>();
     }
 
     private void Update()
@@ -30,6 +36,13 @@ public class GameManager : MonoBehaviour
     public void OnMsgKick(MsgBase msgBase)
     {
         PanelManager.Open<TipPanel>("被踢下线");
+
+        //被踢下线后，先关闭当前面板，通过Root来找
+        root.GetComponent<BasePanel>().Close();
+
+        //然后需要返回登录界面
+        PanelManager.Open<LoginPanel>();
+        
     }
 
     public void OnConnectClose(string err)
