@@ -102,6 +102,7 @@ public class RoomPanel : BasePanel
         Text playerIdText       = playerTrans.Find("IDValue_Text").GetComponent<Text>();
         Text beanText           = playerTrans.Find("BeanValue_Text").GetComponent<Text>();
         Text isPrepareText      = playerTrans.Find("StatusValue_Text").GetComponent<Text>();
+        Image hostImg           = playerTrans.Find("Host_Img").GetComponent<Image>();
 
         //更新玩家数据
         playerIdText.text = playerInfo.playerID;
@@ -117,10 +118,30 @@ public class RoomPanel : BasePanel
             isPrepareText.text = "未准备";
         }
 
-        //根据玩家是否是房主来显示相应的按钮
+        //根据玩家是否是房主来显示相应的信息
         if (playerInfo.isHost)
         {
+            hostImg.gameObject.SetActive(true);
+        }
+        else
+        {
+            hostImg.gameObject.SetActive(false);
+        }
 
+        //如果当前玩家是房主，则显示对应的按钮
+        if(playerInfo.playerID == GameManager.playerId)
+        {
+            GameManager.isHost = playerInfo.isHost;
+            if (GameManager.isHost)
+            {
+                startButton.gameObject.SetActive(true);
+                prepareButton.gameObject.SetActive(false);
+            }
+            else
+            {
+                startButton.gameObject.SetActive(false);
+                prepareButton.gameObject.SetActive(true);
+            }
         }
     }
 

@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     /// 玩家id
     /// </summary>
     public static string playerId = "";
+    /// <summary>
+    /// 当前玩家是否为房主
+    /// </summary>
+    public static bool isHost;
 
     void Start()
     {
