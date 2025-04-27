@@ -36,6 +36,7 @@ public class RoomPanel : BasePanel
         //添加协议监听
         NetManager.AddMsgListener("MsgGetRoomInfo", OnMsgGetRoomInfo);
         NetManager.AddMsgListener("MsgLeaveRoom", OnMsgLeaveRoom);
+        NetManager.AddMsgListener("MsgPrepare", OnMsgPrepare);
 
         //进入房间时先获取房间信息
         //服务端返回PlayerInfo[]的玩家信息
@@ -47,6 +48,7 @@ public class RoomPanel : BasePanel
     {
         NetManager.RemoveMsgListener("MsgGetRoomInfo", OnMsgGetRoomInfo);
         NetManager.RemoveMsgListener("MsgLeaveRoom", OnMsgLeaveRoom);
+        NetManager.RemoveMsgListener("MsgPrepare", OnMsgPrepare);
     }
 
     public void OnStartClick()
@@ -56,7 +58,8 @@ public class RoomPanel : BasePanel
 
     public void OnPrepareClick()
     {
-
+        MsgPrepare msgPrepare = new MsgPrepare();
+        NetManager.Send(msgPrepare);
     }
 
     public void OnExitClick()
@@ -162,5 +165,20 @@ public class RoomPanel : BasePanel
         {
             PanelManager.Open<TipPanel>("退出房间失败");
         }
+    }
+
+    public void OnMsgPrepare(MsgBase msgBase)
+    {
+        MsgPrepare msgPrepare = msgBase as MsgPrepare;
+        if(msgPrepare.isPrepare == false)
+        {
+            return;
+        }
+
+        //向服务端发送消息，重新获取当前房间内的所有玩家
+        MsgGetRoomInfo msgGetRoomInfo = new MsgGetRoomInfo();
+        NetManager.Send(msgGetRoomInfo);
+
+
     }
 }
