@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     /// 通过Root来找当前场景激活的Panel
     /// </summary>
     private Transform root;
+    /// <summary>
+    /// 玩家手牌
+    /// </summary>
+    public static List<Card> cards = new List<Card>();
 
     void Start()
     {
