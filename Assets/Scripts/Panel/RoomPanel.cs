@@ -20,11 +20,11 @@ public class RoomPanel : BasePanel
     public override void OnShow(params object[] para)
     {
         //寻找组件
-        startButton     = skin.transform.Find("Join/Start_Button").GetComponent<Button>();
-        prepareButton   = skin.transform.Find("Join/Prepare_Button").GetComponent<Button>();
-        exitButton      = skin.transform.Find("Join/Exit_Button").GetComponent<Button>();
-        content         = skin.transform.Find("PlayerList/Scroll View/Viewport/Content");
-        playerObj       = skin.transform.Find("Player").gameObject;
+        startButton = skin.transform.Find("Join/Start_Button").GetComponent<Button>();
+        prepareButton = skin.transform.Find("Join/Prepare_Button").GetComponent<Button>();
+        exitButton = skin.transform.Find("Join/Exit_Button").GetComponent<Button>();
+        content = skin.transform.Find("PlayerList/Scroll View/Viewport/Content");
+        playerObj = skin.transform.Find("Player").gameObject;
 
         playerObj.SetActive(false);
 
@@ -37,6 +37,7 @@ public class RoomPanel : BasePanel
         NetManager.AddMsgListener("MsgGetRoomInfo", OnMsgGetRoomInfo);
         NetManager.AddMsgListener("MsgLeaveRoom", OnMsgLeaveRoom);
         NetManager.AddMsgListener("MsgPrepare", OnMsgPrepare);
+        NetManager.AddMsgListener("MsgStartGame", OnMsgStartGame);
 
         //进入房间时先获取房间信息
         //服务端返回PlayerInfo[]的玩家信息
@@ -49,11 +50,13 @@ public class RoomPanel : BasePanel
         NetManager.RemoveMsgListener("MsgGetRoomInfo", OnMsgGetRoomInfo);
         NetManager.RemoveMsgListener("MsgLeaveRoom", OnMsgLeaveRoom);
         NetManager.RemoveMsgListener("MsgPrepare", OnMsgPrepare);
+        NetManager.RemoveMsgListener("MsgStartGame", OnMsgStartGame);
     }
 
     public void OnStartClick()
     {
-
+        MsgStartGame msgStartGame = new MsgStartGame();
+        NetManager.Send(msgStartGame);
     }
 
     public void OnPrepareClick()
@@ -76,22 +79,26 @@ public class RoomPanel : BasePanel
     {
         MsgGetRoomInfo msgGetRoomInfo = msgBase as MsgGetRoomInfo;
 
-        for(int i = content.childCount - 1; i >= 0; i--)
+        for (int i = content.childCount - 1; i >= 0; i--)
         {
             Destroy(content.GetChild(i).gameObject);
         }
 
-        if(msgGetRoomInfo.players == null)
+        if (msgGetRoomInfo.players == null)
         {
             return;
         }
 
-        for(int i =0;i< msgGetRoomInfo.players.Length; i++)
+        for (int i = 0; i < msgGetRoomInfo.players.Length; i++)
         {
             GeneratePlayer(msgGetRoomInfo.players[i]);
         }
     }
 
+    /// <summary>
+    /// 生成房间列表中的玩家
+    /// </summary>
+    /// <param name="playerInfo"></param>
     public void GeneratePlayer(PlayerInfo playerInfo)
     {
         //实例化玩家对象
@@ -101,11 +108,11 @@ public class RoomPanel : BasePanel
         go.transform.localScale = Vector3.one;
 
         //寻找玩家对象内的组件
-        Transform playerTrans   = go.transform;
-        Text playerIdText       = playerTrans.Find("IDValue_Text").GetComponent<Text>();
-        Text beanText           = playerTrans.Find("BeanValue_Text").GetComponent<Text>();
-        Text isPrepareText      = playerTrans.Find("StatusValue_Text").GetComponent<Text>();
-        Image hostImg           = playerTrans.Find("Host_Img").GetComponent<Image>();
+        Transform playerTrans = go.transform;
+        Text playerIdText = playerTrans.Find("IDValue_Text").GetComponent<Text>();
+        Text beanText = playerTrans.Find("BeanValue_Text").GetComponent<Text>();
+        Text isPrepareText = playerTrans.Find("StatusValue_Text").GetComponent<Text>();
+        Image hostImg = playerTrans.Find("Host_Img").GetComponent<Image>();
 
         //更新玩家数据
         playerIdText.text = playerInfo.playerID;
@@ -132,7 +139,7 @@ public class RoomPanel : BasePanel
         }
 
         //如果当前玩家是房主，则显示对应的按钮
-        if(playerInfo.playerID == GameManager.playerId)
+        if (playerInfo.playerID == GameManager.playerId)
         {
             GameManager.isHost = playerInfo.isHost;
             if (GameManager.isHost)
@@ -148,6 +155,10 @@ public class RoomPanel : BasePanel
         }
     }
 
+    /// <summary>
+    /// 玩家离开房间
+    /// </summary>
+    /// <param name="msgBase"></param>
     public void OnMsgLeaveRoom(MsgBase msgBase)
     {
         MsgLeaveRoom msgLeaveRoom = msgBase as MsgLeaveRoom;
@@ -167,10 +178,14 @@ public class RoomPanel : BasePanel
         }
     }
 
+    /// <summary>
+    /// 玩家准备
+    /// </summary>
+    /// <param name="msgBase"></param>
     public void OnMsgPrepare(MsgBase msgBase)
     {
         MsgPrepare msgPrepare = msgBase as MsgPrepare;
-        if(msgPrepare.isPrepare == false)
+        if (msgPrepare.isPrepare == false)
         {
             return;
         }
@@ -178,7 +193,29 @@ public class RoomPanel : BasePanel
         //向服务端发送消息，重新获取当前房间内的所有玩家
         MsgGetRoomInfo msgGetRoomInfo = new MsgGetRoomInfo();
         NetManager.Send(msgGetRoomInfo);
+    }
 
-
+    public void OnMsgStartGame(MsgBase msgBase)
+    {
+        MsgStartGame msgStartGame = msgBase as MsgStartGame;
+        switch (msgStartGame.result)
+        {
+            case 0:
+                PanelManager.Open<GamePanel>();
+                Close();
+                break;
+            case 1:
+                PanelManager.Open<TipPanel>("房间内人数不足,无法开始游戏");
+                break;
+            case 2:
+                PanelManager.Open<TipPanel>("有玩家未准备,无法开始游戏");
+                break;
+            case 3:
+                PanelManager.Open<TipPanel>("房间为空,无法开始游戏");
+                break;
+            default:
+                PanelManager.Open<TipPanel>("RoomPanel.OnMsgStartGame : 未知错误");
+                break;
+        }
     }
 }
