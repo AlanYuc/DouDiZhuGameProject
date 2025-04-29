@@ -19,9 +19,9 @@ public enum Suit
     /// </summary>
     Club,
     /// <summary>
-    /// 方片
+    /// 方片Diamond
     /// </summary>
-    Diamond,
+    Square,
     /// <summary>
     /// 红桃
     /// </summary>
@@ -29,7 +29,7 @@ public enum Suit
     /// <summary>
     /// 黑桃(Spade)
     /// </summary>
-    Square,
+    Spade,
 }
 
 /// <summary>

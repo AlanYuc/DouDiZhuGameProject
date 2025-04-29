@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
         PanelManager.Open<LoginPanel>();
 
         root = GameObject.Find("Root").GetComponent<Transform>();
+
+        CardManager.Init();
     }
 
     private void Update()
