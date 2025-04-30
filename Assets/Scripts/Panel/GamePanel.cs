@@ -51,12 +51,17 @@ public class GamePanel : BasePanel
         NetManager.AddMsgListener("MsgGetCardList", OnMsgGetCardList);
         NetManager.AddMsgListener("MsgGetStartPlayer", OnMsgGetStartPlayer);
         NetManager.AddMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
+        NetManager.AddMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
 
         //添加按钮事件
         callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
         notCallLandlordButton.onClick.AddListener(OnNotCallLandlordButtonClick);
         robLandlordButton.onClick.AddListener(OnRobLandlordButtonClick);
         notRobLandlordButton.onClick.AddListener(OnNotRobLandlordButtonClick);
+
+        //发送请求消息，获取同桌的左右玩家的id
+        MsgGetOtherPlayers msgGetOtherPlayers = new MsgGetOtherPlayers();
+        NetManager.Send(msgGetOtherPlayers);
 
         //发送请求消息，先获取一副扑克牌
         MsgGetCardList msgGetCardList = new MsgGetCardList();
@@ -72,6 +77,7 @@ public class GamePanel : BasePanel
         NetManager.RemoveMsgListener("MsgGetCardList", OnMsgGetCardList);
         NetManager.RemoveMsgListener("MsgGetStartPlayer", OnMsgGetStartPlayer);
         NetManager.RemoveMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
+        NetManager.RemoveMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
@@ -164,6 +170,18 @@ public class GamePanel : BasePanel
                 break;
         }
 
+    }
+
+    /// <summary>
+    /// 获得同桌的其他玩家
+    /// </summary>
+    /// <param name="msgBase"></param>
+    public void OnMsgGetOtherPlayers(MsgBase msgBase)
+    {
+        MsgGetOtherPlayers msgGetOtherPlayers = msgBase as MsgGetOtherPlayers;
+
+        GameManager.leftPlayerId = msgGetOtherPlayers.leftPlayerId;
+        GameManager.rightPlayerId = msgGetOtherPlayers.rightPlayerId;
     }
 
     /// <summary>

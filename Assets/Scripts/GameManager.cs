@@ -28,6 +28,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static string playerId = "";
     /// <summary>
+    /// 坐在当前玩家左侧的玩家id
+    /// </summary>
+    public static string leftPlayerId = "";
+    /// <summary>
+    /// 坐在当前玩家右侧的玩家id
+    /// </summary>
+    public static string rightPlayerId = "";
+    
+    /// <summary>
     /// 当前玩家是否为房主
     /// </summary>
     public static bool isHost;
