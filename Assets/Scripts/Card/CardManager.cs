@@ -43,5 +43,37 @@ public class CardManager
         }
         return "";
     }
+
+    public static Card GetCard(string name)
+    {
+        if (nameCards.ContainsKey(name))
+        {
+            return nameCards[name];
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 卡牌排序
+    /// </summary>
+    /// <param name="cards">需要排序的卡牌数组</param>
+    /// <returns></returns>
+    public static Card[] CardSort(Card[] cards)
+    {
+        Card temp;
+        for (int i= 0; i < cards.Length; i++)
+        {
+            for (int j = cards.Length - 1; j > i; j--) 
+            {
+                if (cards[j].rank > cards[j - 1].rank)
+                {
+                    temp = cards[j];
+                    cards[j] = cards[j - 1];
+                    cards[j - 1] = temp;
+                }
+            }
+        }
+        return cards;
+    }
 }
 
