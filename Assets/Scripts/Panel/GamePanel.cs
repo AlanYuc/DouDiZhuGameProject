@@ -36,11 +36,11 @@ public class GamePanel : BasePanel
     public override void OnShow(params object[] para)
     {
         //寻找组件
-        playerObj               = skin.transform.Find("Player").gameObject;
-        callLandlordButton      = skin.transform.Find("CallLandlord_Btn").GetComponent<Button>();
-        notCallLandlordButton   = skin.transform.Find("NotCallLandlord_Btn").GetComponent<Button>();
-        robLandlordButton       = skin.transform.Find("RobLandlord_Btn").GetComponent<Button>();
-        notRobLandlordButton    = skin.transform.Find("NotRobLandlord_Btn").GetComponent<Button>();
+        playerObj = skin.transform.Find("Player").gameObject;
+        callLandlordButton = skin.transform.Find("CallLandlord_Btn").GetComponent<Button>();
+        notCallLandlordButton = skin.transform.Find("NotCallLandlord_Btn").GetComponent<Button>();
+        robLandlordButton = skin.transform.Find("RobLandlord_Btn").GetComponent<Button>();
+        notRobLandlordButton = skin.transform.Find("NotRobLandlord_Btn").GetComponent<Button>();
 
         callLandlordButton.gameObject.SetActive(false);
         notCallLandlordButton.gameObject.SetActive(false);
@@ -50,6 +50,13 @@ public class GamePanel : BasePanel
         //添加消息监听
         NetManager.AddMsgListener("MsgGetCardList", OnMsgGetCardList);
         NetManager.AddMsgListener("MsgGetStartPlayer", OnMsgGetStartPlayer);
+        NetManager.AddMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
+
+        //添加按钮事件
+        callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
+        notCallLandlordButton.onClick.AddListener(OnNotCallLandlordButtonClick);
+        robLandlordButton.onClick.AddListener(OnRobLandlordButtonClick);
+        notRobLandlordButton.onClick.AddListener(OnNotRobLandlordButtonClick);
 
         //发送请求消息，先获取一副扑克牌
         MsgGetCardList msgGetCardList = new MsgGetCardList();
@@ -64,21 +71,33 @@ public class GamePanel : BasePanel
     {
         NetManager.RemoveMsgListener("MsgGetCardList", OnMsgGetCardList);
         NetManager.RemoveMsgListener("MsgGetStartPlayer", OnMsgGetStartPlayer);
+        NetManager.RemoveMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
     {
         MsgGetCardList msgGetCardList = msgBase as MsgGetCardList;
 
-        for(int i = 0; i < CardManager.maxHandSize; i++)
+        for (int i = 0; i < CardManager.maxHandSize; i++)
         {
             //根据卡牌信息构造卡牌
             Card card = new Card(msgGetCardList.cardInfos[i].suit, msgGetCardList.cardInfos[i].rank);
             GameManager.cards.Add(card);
         }
 
+        //手牌排序
+        Card[] cards = CardManager.CardSort(GameManager.cards.ToArray());
+
         //实例化生成卡牌
-        GenerateCard(GameManager.cards.ToArray());
+        GenerateCard(cards);
+    }
+
+    /// <summary>
+    /// 手牌排序
+    /// </summary>
+    public void CardSort()
+    {
+
     }
 
     /// <summary>
@@ -113,5 +132,71 @@ public class GamePanel : BasePanel
             callLandlordButton.gameObject.SetActive(true);
             notCallLandlordButton.gameObject.SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// 玩家叫/抢完地主后，切换到下一个玩家
+    /// </summary>
+    /// <param name="msgBase"></param>
+    public void OnMsgSwitchTurn(MsgBase msgBase)
+    {
+        MsgSwitchTurn msgSwitchTurn = msgBase as MsgSwitchTurn;
+        switch (GameManager.status)
+        {
+            case PlayerStatus.Call:
+                //下一个叫地主的玩家就是当前客户端的玩家，就显示叫地主的按钮
+                if(msgSwitchTurn.nextPlayerId == GameManager.playerId)
+                {
+                    callLandlordButton.gameObject.SetActive(true);
+                    notCallLandlordButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    callLandlordButton.gameObject.SetActive(false);
+                    notCallLandlordButton.gameObject.SetActive(false);
+                }
+                break;
+            case PlayerStatus.Rob:
+                break;
+            case PlayerStatus.Play:
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    /// <summary>
+    /// 玩家点击"叫地主"按钮
+    /// </summary>
+    public void OnCallLandlordButtonClick()
+    {
+        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
+        NetManager.Send(msgSwitchTurn);
+    }
+
+    /// <summary>
+    /// 玩家点击"不叫"按钮
+    /// </summary>
+    public void OnNotCallLandlordButtonClick()
+    {
+        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
+        NetManager.Send(msgSwitchTurn);
+    }
+
+    /// <summary>
+    /// 玩家点击"抢地主"按钮
+    /// </summary>
+    public void OnRobLandlordButtonClick()
+    {
+
+    }
+
+    /// <summary>
+    /// 玩家点击"不抢"按钮
+    /// </summary>
+    public void OnNotRobLandlordButtonClick()
+    {
+
     }
 }
