@@ -36,11 +36,14 @@ public class GamePanel : BasePanel
     public override void OnShow(params object[] para)
     {
         //Ñ°ÕÒ×é¼þ
-        playerObj = skin.transform.Find("Player").gameObject;
-        callLandlordButton = skin.transform.Find("CallLandlord_Btn").GetComponent<Button>();
-        notCallLandlordButton = skin.transform.Find("NotCallLandlord_Btn").GetComponent<Button>();
-        robLandlordButton = skin.transform.Find("RobLandlord_Btn").GetComponent<Button>();
-        notRobLandlordButton = skin.transform.Find("NotRobLandlord_Btn").GetComponent<Button>();
+        playerObj                       = skin.transform.Find("Player").gameObject;
+        callLandlordButton              = skin.transform.Find("CallLandlord_Btn").GetComponent<Button>();
+        notCallLandlordButton           = skin.transform.Find("NotCallLandlord_Btn").GetComponent<Button>();
+        robLandlordButton               = skin.transform.Find("RobLandlord_Btn").GetComponent<Button>();
+        notRobLandlordButton            = skin.transform.Find("NotRobLandlord_Btn").GetComponent<Button>();
+
+        GameManager.leftPlayerInfoObj   = skin.transform.Find("Player_Left/InfoObj").gameObject;
+        GameManager.rightPlayerInfoObj  = skin.transform.Find("Player_Right/InfoObj").gameObject;
 
         callLandlordButton.gameObject.SetActive(false);
         notCallLandlordButton.gameObject.SetActive(false);
