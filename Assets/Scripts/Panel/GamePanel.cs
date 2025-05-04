@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,6 +56,7 @@ public class GamePanel : BasePanel
         NetManager.AddMsgListener("MsgGetStartPlayer", OnMsgGetStartPlayer);
         NetManager.AddMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
         NetManager.AddMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
+        NetManager.AddMsgListener("MsgCallLandlord", OnMsgCallLandlord);
 
         //添加按钮事件
         callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
@@ -81,6 +83,7 @@ public class GamePanel : BasePanel
         NetManager.RemoveMsgListener("MsgGetStartPlayer", OnMsgGetStartPlayer);
         NetManager.RemoveMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
         NetManager.RemoveMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
+        NetManager.RemoveMsgListener("MsgCallLandlord", OnMsgCallLandlord);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
@@ -187,13 +190,59 @@ public class GamePanel : BasePanel
         GameManager.rightPlayerId = msgGetOtherPlayers.rightPlayerId;
     }
 
+    public void OnMsgCallLandlord(MsgBase msgBase)
+    {
+        MsgCallLandlord msgCallLandlord = msgBase as MsgCallLandlord;
+
+        if (msgCallLandlord.isCall)
+        {
+            GameManager.SyncGenerate(msgCallLandlord.id, "Word/CallLandlord");
+        }
+        else
+        {
+            GameManager.SyncGenerate(msgCallLandlord.id, "Word/NotCallLandlord");
+        }
+
+        if(msgCallLandlord.id != GameManager.playerId)
+        {
+            return;
+        }
+
+        switch (msgCallLandlord.result)
+        {
+            case 0:
+                break;
+            case 1://抢地主
+                break;
+            case 2://重新洗牌
+                break;
+            case 3://自己是地主
+                TurnLandLord();
+                break;
+            default:
+                break;
+        }
+
+        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
+        NetManager.Send(msgSwitchTurn);
+    }
+
+    public void TurnLandLord()
+    {
+        GameManager.isLandLord = true;
+        GameObject go = Resources.Load<GameObject>("LandLord");
+        Sprite sprite = go.GetComponent<SpriteRenderer>().sprite;
+        playerObj.transform.Find("Image").GetComponent<Image>().sprite = sprite;
+    }
+
     /// <summary>
     /// 玩家点击"叫地主"按钮
     /// </summary>
     public void OnCallLandlordButtonClick()
     {
-        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
-        NetManager.Send(msgSwitchTurn);
+        MsgCallLandlord msgCallLandlord = new MsgCallLandlord();
+        msgCallLandlord.isCall = true;
+        NetManager.Send(msgCallLandlord);
     }
 
     /// <summary>
@@ -201,8 +250,9 @@ public class GamePanel : BasePanel
     /// </summary>
     public void OnNotCallLandlordButtonClick()
     {
-        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
-        NetManager.Send(msgSwitchTurn);
+        MsgCallLandlord msgCallLandlord = new MsgCallLandlord();
+        msgCallLandlord.isCall = false;
+        NetManager.Send(msgCallLandlord);
     }
 
     /// <summary>

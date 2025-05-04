@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static bool isHost;
     /// <summary>
+    /// 当前玩家是不是地主
+    /// </summary>
+    public static bool isLandLord = false;
+    /// <summary>
     /// 通过Root来找当前场景激活的Panel
     /// </summary>
     private Transform root;
@@ -52,6 +56,14 @@ public class GameManager : MonoBehaviour
     /// 玩家当前的状态，默认给为叫地主状态
     /// </summary>
     public static PlayerStatus status = PlayerStatus.Call;
+    /// <summary>
+    /// 坐在左边的玩家生成的游戏物体，比如叫地主、抢地主的状态信息等
+    /// </summary>
+    public static GameObject leftPlayerInfoObj;
+    /// <summary>
+    /// 坐在右边的玩家生成的游戏物体，比如叫地主、抢地主的状态信息等
+    /// </summary>
+    public static GameObject rightPlayerInfoObj;
 
     void Start()
     {
@@ -86,5 +98,29 @@ public class GameManager : MonoBehaviour
     public void OnConnectClose(string err)
     {
         PanelManager.Open<TipPanel>("断开连接");
+    }
+
+    /// <summary>
+    /// 同步生成其他玩家的相关信息的游戏物体，比如谁正在叫地主，谁正在抢地主等
+    /// </summary>
+    /// <param name="id">需要加载游戏物体的id</param>
+    /// <param name="name">需要加载游戏物体的名字（包含路径）</param>
+    public static void SyncGenerate(string id, string name)
+    {
+        GameObject resource = Resources.Load<GameObject>(name);
+
+        //当前需要生成左侧玩家的信息
+        if(leftPlayerId == id)
+        {
+            GameObject go = Instantiate(resource, Vector3.zero, Quaternion.identity);
+            go.transform.SetParent(leftPlayerInfoObj.transform, false);
+        }
+
+        //当前需要生成右侧玩家的信息
+        if (rightPlayerId == id)
+        {
+            GameObject go = Instantiate(resource, Vector3.zero, Quaternion.identity);
+            go.transform.SetParent(rightPlayerInfoObj.transform, false);
+        }
     }
 }
