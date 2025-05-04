@@ -57,6 +57,7 @@ public class GamePanel : BasePanel
         NetManager.AddMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
         NetManager.AddMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
         NetManager.AddMsgListener("MsgCallLandlord", OnMsgCallLandlord);
+        NetManager.AddMsgListener("MsgReStart", OnMsgReStart);
 
         //添加按钮事件
         callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
@@ -84,6 +85,7 @@ public class GamePanel : BasePanel
         NetManager.RemoveMsgListener("MsgSwitchTurn", OnMsgSwitchTurn);
         NetManager.RemoveMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
         NetManager.RemoveMsgListener("MsgCallLandlord", OnMsgCallLandlord);
+        NetManager.RemoveMsgListener("MsgReStart", OnMsgReStart);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
@@ -190,6 +192,10 @@ public class GamePanel : BasePanel
         GameManager.rightPlayerId = msgGetOtherPlayers.rightPlayerId;
     }
 
+    /// <summary>
+    /// 处理叫地主的逻辑
+    /// </summary>
+    /// <param name="msgBase"></param>
     public void OnMsgCallLandlord(MsgBase msgBase)
     {
         MsgCallLandlord msgCallLandlord = msgBase as MsgCallLandlord;
@@ -215,6 +221,8 @@ public class GamePanel : BasePanel
             case 1://抢地主
                 break;
             case 2://重新洗牌
+                MsgReStart msgReStart = new MsgReStart();
+                NetManager.Send(msgReStart);
                 break;
             case 3://自己是地主
                 TurnLandLord();
@@ -225,6 +233,28 @@ public class GamePanel : BasePanel
 
         MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
         NetManager.Send(msgSwitchTurn);
+    }
+
+    /// <summary>
+    /// 都不叫地主后，重新开始并洗牌
+    /// </summary>
+    /// <param name="msgBase"></param>
+    public void OnMsgReStart(MsgBase msgBase)
+    {
+        MsgReStart msgReStart = msgBase as MsgReStart;
+
+        //先把原先Cards对象下面的所有卡牌销毁
+        Transform cardTrans = playerObj.transform.Find("Cards");
+        for (int i = cardTrans.childCount - 1; i >= 0; i--) 
+        {
+            Destroy(cardTrans.GetChild(i).gameObject);
+        }
+        //把玩家数据中的卡牌清空
+        GameManager.cards.Clear();
+
+        //然后重新获取一次卡牌，卡牌在MsgReStart的消息发送给服务端后，服务端已完成重新洗牌
+        MsgGetCardList msgGetCardList = new MsgGetCardList();
+        NetManager.Send(msgGetCardList);
     }
 
     public void TurnLandLord()
