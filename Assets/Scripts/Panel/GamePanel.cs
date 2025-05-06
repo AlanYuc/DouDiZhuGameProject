@@ -59,6 +59,7 @@ public class GamePanel : BasePanel
         NetManager.AddMsgListener("MsgCallLandlord", OnMsgCallLandlord);
         NetManager.AddMsgListener("MsgReStart", OnMsgReStart);
         NetManager.AddMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
+        NetManager.AddMsgListener("MsgRobLandlord", OnMsgRobLandlord);
 
         //添加按钮事件
         callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
@@ -88,6 +89,7 @@ public class GamePanel : BasePanel
         NetManager.RemoveMsgListener("MsgCallLandlord", OnMsgCallLandlord);
         NetManager.RemoveMsgListener("MsgReStart", OnMsgReStart);
         NetManager.RemoveMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
+        NetManager.RemoveMsgListener("MsgRobLandlord", OnMsgRobLandlord);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
@@ -219,6 +221,7 @@ public class GamePanel : BasePanel
     {
         MsgCallLandlord msgCallLandlord = msgBase as MsgCallLandlord;
 
+        //左右两边的玩家根据是否叫地主显示相关信息
         if (msgCallLandlord.isCall)
         {
             GameManager.SyncGenerate(msgCallLandlord.id, "Word/CallLandlord");
@@ -228,6 +231,7 @@ public class GamePanel : BasePanel
             GameManager.SyncGenerate(msgCallLandlord.id, "Word/NotCallLandlord");
         }
 
+        //不是当前玩家，后续的处理不需要执行
         if(msgCallLandlord.id != GameManager.playerId)
         {
             return;
@@ -252,6 +256,7 @@ public class GamePanel : BasePanel
                 break;
         }
 
+        //发送消息切换回合
         MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
         NetManager.Send(msgSwitchTurn);
     }
@@ -278,6 +283,10 @@ public class GamePanel : BasePanel
         NetManager.Send(msgGetCardList);
     }
 
+    /// <summary>
+    /// 开始抢地主，切换相关的状态
+    /// </summary>
+    /// <param name="msgBase"></param>
     public void OnMsgStartRobLandlord(MsgBase msgBase)
     {
         MsgStartRobLandlord msgStartRobLandlord = msgBase as MsgStartRobLandlord;
@@ -286,6 +295,50 @@ public class GamePanel : BasePanel
         GameManager.status = PlayerStatus.Rob;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="msgBase"></param>
+    public void OnMsgRobLandlord(MsgBase msgBase)
+    {
+        MsgRobLandlord msgRobLandlord = msgBase as MsgRobLandlord;
+
+        //发送消息切换回合
+        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
+
+        //左右两边的玩家根据是否抢地主显示相关信息
+        if (msgRobLandlord.isRob)
+        {
+            GameManager.SyncGenerate(msgRobLandlord.id, "Word/RobLandlord");
+        }
+        else
+        {
+            GameManager.SyncGenerate(msgRobLandlord.id, "Word/NotRobLandlord");
+        }
+
+        //自己是地主，切换图片素材
+        if(msgRobLandlord.landLordId == GameManager.playerId)
+        {
+            TurnLandLord();
+        }
+
+        if (!msgRobLandlord.isNeedRob)
+        {
+            //下一家不需要抢地主，那么直接跳过
+            msgSwitchTurn.round = 2;
+            NetManager.Send(msgSwitchTurn);
+            return;
+        }
+        else
+        {
+            //下一家需要抢地主  
+            msgSwitchTurn.round = 1;
+            NetManager.Send(msgSwitchTurn);
+            return;
+        }
+    }
+
+    //成为地主，跟换地主图片素材
     public void TurnLandLord()
     {
         GameManager.isLandLord = true;
@@ -319,7 +372,9 @@ public class GamePanel : BasePanel
     /// </summary>
     public void OnRobLandlordButtonClick()
     {
-
+        MsgRobLandlord msgRobLandlord = new MsgRobLandlord();
+        msgRobLandlord.isRob = true;
+        NetManager.Send(msgRobLandlord);
     }
 
     /// <summary>
@@ -327,6 +382,8 @@ public class GamePanel : BasePanel
     /// </summary>
     public void OnNotRobLandlordButtonClick()
     {
-
+        MsgRobLandlord msgRobLandlord = new MsgRobLandlord();
+        msgRobLandlord.isRob = false;
+        NetManager.Send(msgRobLandlord);
     }
 }
