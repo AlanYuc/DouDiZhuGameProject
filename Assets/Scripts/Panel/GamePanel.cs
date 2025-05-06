@@ -58,6 +58,7 @@ public class GamePanel : BasePanel
         NetManager.AddMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
         NetManager.AddMsgListener("MsgCallLandlord", OnMsgCallLandlord);
         NetManager.AddMsgListener("MsgReStart", OnMsgReStart);
+        NetManager.AddMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
 
         //添加按钮事件
         callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
@@ -86,6 +87,7 @@ public class GamePanel : BasePanel
         NetManager.RemoveMsgListener("MsgGetOtherPlayers", OnMsgGetOtherPlayers);
         NetManager.RemoveMsgListener("MsgCallLandlord", OnMsgCallLandlord);
         NetManager.RemoveMsgListener("MsgReStart", OnMsgReStart);
+        NetManager.RemoveMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
@@ -171,7 +173,24 @@ public class GamePanel : BasePanel
                 }
                 break;
             case PlayerStatus.Rob:
-                break;
+                //下一个抢地主的玩家就是当前客户端的玩家，就显示抢地主的按钮
+                if(msgSwitchTurn.nextPlayerId == GameManager.playerId)
+                {
+                    robLandlordButton.gameObject.SetActive(true);
+                    notRobLandlordButton.gameObject.SetActive(true);
+
+                    //抢地主阶段，叫地主的按钮隐藏
+                    callLandlordButton.gameObject.SetActive(false);
+                    notCallLandlordButton.gameObject.SetActive(false);
+                }
+                else
+                {
+                    robLandlordButton.gameObject.SetActive(false);
+                    notRobLandlordButton.gameObject.SetActive(false);
+                    callLandlordButton.gameObject.SetActive(false);
+                    notCallLandlordButton.gameObject.SetActive(false);
+                }
+                    break;
             case PlayerStatus.Play:
                 break;
             default:
@@ -219,6 +238,8 @@ public class GamePanel : BasePanel
             case 0:
                 break;
             case 1://抢地主
+                MsgStartRobLandlord msgStartRobLandlord = new MsgStartRobLandlord();
+                NetManager.Send(msgStartRobLandlord);
                 break;
             case 2://重新洗牌
                 MsgReStart msgReStart = new MsgReStart();
@@ -255,6 +276,14 @@ public class GamePanel : BasePanel
         //然后重新获取一次卡牌，卡牌在MsgReStart的消息发送给服务端后，服务端已完成重新洗牌
         MsgGetCardList msgGetCardList = new MsgGetCardList();
         NetManager.Send(msgGetCardList);
+    }
+
+    public void OnMsgStartRobLandlord(MsgBase msgBase)
+    {
+        MsgStartRobLandlord msgStartRobLandlord = msgBase as MsgStartRobLandlord;
+
+        //更改当前阶段为抢地主阶段
+        GameManager.status = PlayerStatus.Rob;
     }
 
     public void TurnLandLord()
