@@ -19,7 +19,7 @@ public class MsgRobLandlord : MsgBase
     /// </summary>
     public bool isRob;
     /// <summary>
-    /// 有没有资格抢地主。在服务端更新。
+    /// 下一家有没有资格抢地主。在服务端更新。
     /// 比如第一轮不叫，第二轮就没有资格抢地主
     /// </summary>
     public bool isNeedRob = true;
