@@ -231,12 +231,19 @@ public class GamePanel : BasePanel
             GameManager.SyncGenerate(msgCallLandlord.id, "Word/NotCallLandlord");
         }
 
-        //不是当前玩家，后续的处理不需要执行
+        //有其他玩家成为地主，更改图片
+        if(msgCallLandlord.result == 3)
+        {
+            SyncLandLord(msgCallLandlord.id);
+        }
+
+        //不是当前玩家，后续自身的逻辑不需要执行
         if(msgCallLandlord.id != GameManager.playerId)
         {
             return;
         }
 
+        //开始处理自身的逻辑
         switch (msgCallLandlord.result)
         {
             case 0:
@@ -316,10 +323,19 @@ public class GamePanel : BasePanel
             GameManager.SyncGenerate(msgRobLandlord.id, "Word/NotRobLandlord");
         }
 
+        //还没有成为地主的话，msgRobLandlord.landLordId为空，不会更改图片
+        SyncLandLord(msgRobLandlord.landLordId);
+
         //自己是地主，切换图片素材
         if(msgRobLandlord.landLordId == GameManager.playerId)
         {
             TurnLandLord();
+        }
+
+        //抢地主的不是自己，后续逻辑不需要执行
+        if(msgRobLandlord.id != GameManager.playerId)
+        {
+            return;
         }
 
         if (!msgRobLandlord.isNeedRob)
@@ -345,6 +361,27 @@ public class GamePanel : BasePanel
         GameObject go = Resources.Load<GameObject>("LandLord");
         Sprite sprite = go.GetComponent<SpriteRenderer>().sprite;
         playerObj.transform.Find("Image").GetComponent<Image>().sprite = sprite;
+    }
+
+    /// <summary>
+    /// 如果是左右两边的玩家成为地主，更改他的地主图片
+    /// </summary>
+    /// <param name="id"></param>
+    public void SyncLandLord(string id)
+    {
+        GameObject go = Resources.Load<GameObject>("LandLord");
+        Sprite sprite = go.GetComponent<SpriteRenderer>().sprite;
+        
+        if(id == GameManager.leftPlayerId)
+        {
+            //左边的玩家是地主
+            GameManager.leftPlayerInfoObj.transform.parent.Find("Image").GetComponent<Image>().sprite = sprite;
+        }
+        if (id == GameManager.rightPlayerId)
+        {
+            //右边的玩家是地主
+            GameManager.rightPlayerInfoObj.transform.parent.Find("Image").GetComponent<Image>().sprite = sprite;
+        }
     }
 
     /// <summary>
@@ -376,7 +413,7 @@ public class GamePanel : BasePanel
         msgRobLandlord.isRob = true;
         NetManager.Send(msgRobLandlord);
     }
-
+    
     /// <summary>
     /// 玩家点击"不抢"按钮
     /// </summary>
