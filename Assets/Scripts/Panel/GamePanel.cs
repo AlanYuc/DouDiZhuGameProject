@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -133,7 +134,14 @@ public class GamePanel : BasePanel
     /// <param name="cards"></param>
     public void GenerateCard(Card[] cards)
     {
-        for(int i = 0; i < cards.Length; i++)
+        //每次生成前先清空，避免重复
+        Transform cardsTrans = playerObj.transform.Find("Cards");
+        for(int i = cardsTrans.childCount - 1; i >= 0; i--)
+        {
+            Destroy(cardsTrans.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < cards.Length; i++)
         {
             string name = CardManager.GetName(cards[i]);
             GameObject cardObj = new GameObject(name);
@@ -141,7 +149,7 @@ public class GamePanel : BasePanel
             Sprite sprite = Resources.Load<Sprite>("Card/" + name);
             image.sprite = sprite;
             image.rectTransform.sizeDelta = new Vector2(80, 100);
-            cardObj.transform.SetParent(playerObj.transform.Find("Cards"), false);
+            cardObj.transform.SetParent(cardsTrans, false);
             cardObj.layer = LayerMask.NameToLayer("UI");
         }
     }
@@ -378,10 +386,22 @@ public class GamePanel : BasePanel
     //成为地主，跟换地主图片素材
     public void TurnLandLord()
     {
+        //更换图片
         GameManager.isLandLord = true;
         GameObject go = Resources.Load<GameObject>("LandLord");
         Sprite sprite = go.GetComponent<SpriteRenderer>().sprite;
         playerObj.transform.Find("Image").GetComponent<Image>().sprite = sprite;
+
+        //将底牌添加到地主手中,地主的手牌变成20张
+        Card[] cards = new Card[20];
+
+        //先将原先的手牌拷贝，再拷贝三张底牌
+        //GameManager.cards.ToArray().CopyTo(cards, 0);
+        Array.Copy(GameManager.cards.ToArray(), 0, cards, 0, 17);
+        Array.Copy(GameManager.threeCards.ToArray(), 0, cards, 17, 3);
+
+        cards = CardManager.CardSort(cards);
+        GenerateCard(cards);
     }
 
     /// <summary>
