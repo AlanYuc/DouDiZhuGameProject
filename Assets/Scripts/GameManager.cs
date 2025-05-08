@@ -72,6 +72,14 @@ public class GameManager : MonoBehaviour
     /// 上方的底牌
     /// </summary>
     public static GameObject threeCardsObj;
+    /// <summary>
+    /// 鼠标是否按住，进行选牌
+    /// </summary>
+    public static bool isPressing;
+    /// <summary>
+    /// 选择的手牌
+    /// </summary>
+    public static List<Card> selectCards = new List<Card>();
 
     void Start()
     {
