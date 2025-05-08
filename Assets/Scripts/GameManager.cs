@@ -53,6 +53,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static List<Card> cards = new List<Card>();
     /// <summary>
+    /// 上方给地主的三张底牌
+    /// </summary>
+    public static List<Card> threeCards = new List<Card>();
+    /// <summary>
     /// 玩家当前的状态，默认给为叫地主状态
     /// </summary>
     public static PlayerStatus status = PlayerStatus.Call;
@@ -64,6 +68,10 @@ public class GameManager : MonoBehaviour
     /// 坐在右边的玩家生成的游戏物体，比如叫地主、抢地主的状态信息等
     /// </summary>
     public static GameObject rightPlayerInfoObj;
+    /// <summary>
+    /// 上方的底牌
+    /// </summary>
+    public static GameObject threeCardsObj;
 
     void Start()
     {
@@ -121,6 +129,30 @@ public class GameManager : MonoBehaviour
         {
             GameObject go = Instantiate(resource, Vector3.zero, Quaternion.identity);
             go.transform.SetParent(rightPlayerInfoObj.transform, false);
+        }
+    }
+
+    /// <summary>
+    /// 用于清理已经生成的相关信息，避免信息重叠。
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="name"></param>
+    public static void SyncDestroy(string id)
+    {
+        if(id == leftPlayerId)
+        {
+            for(int i = leftPlayerInfoObj.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(leftPlayerInfoObj.transform.GetChild(i).gameObject);
+            }
+        }
+
+        if (id == rightPlayerId)
+        {
+            for (int i = rightPlayerInfoObj.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(rightPlayerInfoObj.transform.GetChild(i).gameObject);
+            }
         }
     }
 }

@@ -43,8 +43,10 @@ public class GamePanel : BasePanel
         robLandlordButton               = skin.transform.Find("RobLandlord_Btn").GetComponent<Button>();
         notRobLandlordButton            = skin.transform.Find("NotRobLandlord_Btn").GetComponent<Button>();
 
+        //初始化组件
         GameManager.leftPlayerInfoObj   = skin.transform.Find("Player_Left/InfoObj").gameObject;
         GameManager.rightPlayerInfoObj  = skin.transform.Find("Player_Right/InfoObj").gameObject;
+        GameManager.threeCardsObj       = skin.transform.Find("ThreeCards").gameObject;
 
         callLandlordButton.gameObject.SetActive(false);
         notCallLandlordButton.gameObject.SetActive(false);
@@ -108,6 +110,13 @@ public class GamePanel : BasePanel
 
         //实例化生成卡牌
         GenerateCard(cards);
+
+        //获取三张底牌
+        for(int i = 0; i < 3; i++)
+        {
+            Card card = new Card(msgGetCardList.threeCards[i].suit, msgGetCardList.threeCards[i].rank);
+            GameManager.threeCards.Add(card);
+        }
     }
 
     /// <summary>
@@ -224,17 +233,20 @@ public class GamePanel : BasePanel
         //左右两边的玩家根据是否叫地主显示相关信息
         if (msgCallLandlord.isCall)
         {
+            GameManager.SyncDestroy(msgCallLandlord.id);
             GameManager.SyncGenerate(msgCallLandlord.id, "Word/CallLandlord");
         }
         else
         {
+            GameManager.SyncDestroy(msgCallLandlord.id);
             GameManager.SyncGenerate(msgCallLandlord.id, "Word/NotCallLandlord");
         }
 
-        //有其他玩家成为地主，更改图片
+        //有其他玩家成为地主，更改图片,并显示三张底牌
         if(msgCallLandlord.result == 3)
         {
             SyncLandLord(msgCallLandlord.id);
+            RevealThreeCards(GameManager.threeCards.ToArray());
         }
 
         //不是当前玩家，后续自身的逻辑不需要执行
@@ -284,6 +296,7 @@ public class GamePanel : BasePanel
         }
         //把玩家数据中的卡牌清空
         GameManager.cards.Clear();
+        GameManager.threeCards.Clear();
 
         //然后重新获取一次卡牌，卡牌在MsgReStart的消息发送给服务端后，服务端已完成重新洗牌
         MsgGetCardList msgGetCardList = new MsgGetCardList();
@@ -316,10 +329,12 @@ public class GamePanel : BasePanel
         //左右两边的玩家根据是否抢地主显示相关信息
         if (msgRobLandlord.isRob)
         {
+            GameManager.SyncDestroy(msgRobLandlord.id);
             GameManager.SyncGenerate(msgRobLandlord.id, "Word/RobLandlord");
         }
         else
         {
+            GameManager.SyncDestroy(msgRobLandlord.id);
             GameManager.SyncGenerate(msgRobLandlord.id, "Word/NotRobLandlord");
         }
 
@@ -330,6 +345,12 @@ public class GamePanel : BasePanel
         if(msgRobLandlord.landLordId == GameManager.playerId)
         {
             TurnLandLord();
+        }
+
+        if(msgRobLandlord.landLordId != "")
+        {
+            //产生地主了,就揭示三张底牌
+            RevealThreeCards(GameManager.threeCards.ToArray());
         }
 
         //抢地主的不是自己，后续逻辑不需要执行
@@ -381,6 +402,20 @@ public class GamePanel : BasePanel
         {
             //右边的玩家是地主
             GameManager.rightPlayerInfoObj.transform.parent.Find("Image").GetComponent<Image>().sprite = sprite;
+        }
+    }
+
+    /// <summary>
+    /// 叫地主后，揭示上方的三张底牌
+    /// </summary>
+    /// <param name="cards"></param>
+    public void RevealThreeCards(Card[] cards)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            string name = CardManager.GetName(cards[i]);
+            Sprite sprite = Resources.Load<Sprite>("Card/" + name);
+            GameManager.threeCardsObj.transform.GetChild(i).GetComponent<Image>().sprite = sprite;
         }
     }
 
