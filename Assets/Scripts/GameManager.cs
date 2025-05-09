@@ -80,6 +80,10 @@ public class GameManager : MonoBehaviour
     /// 选择的手牌
     /// </summary>
     public static List<Card> selectCards = new List<Card>();
+    /// <summary>
+    /// 是否允许不出牌。true表示可以不出，显示不出的按钮。
+    /// </summary>
+    public static bool canNotPlay;
 
     void Start()
     {

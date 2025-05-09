@@ -27,7 +27,14 @@ public class GamePanel : BasePanel
     /// "不抢"的按钮
     /// </summary>
     public Button notRobLandlordButton;
-
+    /// <summary>
+    /// "出牌"按钮
+    /// </summary>
+    public Button playCardButton;
+    /// <summary>
+    /// "不出"按钮
+    /// </summary>
+    public Button notPlayCardButton;
 
     public override void OnInit()
     {
@@ -43,6 +50,8 @@ public class GamePanel : BasePanel
         notCallLandlordButton           = skin.transform.Find("NotCallLandlord_Btn").GetComponent<Button>();
         robLandlordButton               = skin.transform.Find("RobLandlord_Btn").GetComponent<Button>();
         notRobLandlordButton            = skin.transform.Find("NotRobLandlord_Btn").GetComponent<Button>();
+        playCardButton                  = skin.transform.Find("PlayCard_Btn").GetComponent<Button>();
+        notPlayCardButton               = skin.transform.Find("NotPlayCard_Btn").GetComponent<Button>();
 
         //初始化组件
         GameManager.leftPlayerInfoObj   = skin.transform.Find("Player_Left/InfoObj").gameObject;
@@ -53,6 +62,8 @@ public class GamePanel : BasePanel
         notCallLandlordButton.gameObject.SetActive(false);
         robLandlordButton.gameObject.SetActive(false);
         notRobLandlordButton.gameObject.SetActive(false);
+        playCardButton.gameObject.SetActive(false);
+        notPlayCardButton.gameObject.SetActive(false);
 
         //添加消息监听
         NetManager.AddMsgListener("MsgGetCardList", OnMsgGetCardList);
@@ -211,6 +222,37 @@ public class GamePanel : BasePanel
                 }
                     break;
             case PlayerStatus.Play:
+                //先把叫地主抢地主的按钮全部隐藏
+                robLandlordButton.gameObject.SetActive(false);
+                notRobLandlordButton.gameObject.SetActive(false);
+                callLandlordButton.gameObject.SetActive(false);
+                notCallLandlordButton.gameObject.SetActive(false);
+
+                if (msgSwitchTurn.nextPlayerId == GameManager.playerId)
+                {
+                    playCardButton.gameObject.SetActive(true);
+                    notPlayCardButton.gameObject.SetActive(true);
+
+                    if (GameManager.canNotPlay)//当前状态下允许 不出牌
+                    {
+                        //颜色正常
+                        notPlayCardButton.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                        //可以交互
+                        notPlayCardButton.enabled = true;
+                    }
+                    else//当前状态下不允许 不出牌
+                    {
+                        //颜色变暗
+                        notPlayCardButton.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+                        //不可以交互
+                        notPlayCardButton.enabled = false;
+                    }
+                }
+                else
+                {
+                    playCardButton.gameObject.SetActive(false);
+                    notPlayCardButton.gameObject.SetActive(false);
+                }
                 break;
             default:
                 break;
@@ -253,8 +295,12 @@ public class GamePanel : BasePanel
         //有其他玩家成为地主，更改图片,并显示三张底牌
         if(msgCallLandlord.result == 3)
         {
+            //更改地主图片
             SyncLandLord(msgCallLandlord.id);
+            //揭示上方三张底牌
             RevealThreeCards(GameManager.threeCards.ToArray());
+            //切换玩家状态为出牌阶段
+            GameManager.status = PlayerStatus.Play;
         }
 
         //不是当前玩家，后续自身的逻辑不需要执行
@@ -359,6 +405,8 @@ public class GamePanel : BasePanel
         {
             //产生地主了,就揭示三张底牌
             RevealThreeCards(GameManager.threeCards.ToArray());
+            //切换玩家状态为出牌阶段
+            GameManager.status = PlayerStatus.Play;
         }
 
         //抢地主的不是自己，后续逻辑不需要执行
