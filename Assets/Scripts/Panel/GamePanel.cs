@@ -287,6 +287,7 @@ public class GamePanel : BasePanel
     public void OnMsgCallLandlord(MsgBase msgBase)
     {
         MsgCallLandlord msgCallLandlord = msgBase as MsgCallLandlord;
+        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
 
         //左右两边的玩家根据是否叫地主显示相关信息
         if (msgCallLandlord.isCall)
@@ -332,13 +333,14 @@ public class GamePanel : BasePanel
                 break;
             case 3://自己是地主
                 TurnLandLord();
+                //自己叫地主成功的回合不需要切换回合
+                msgSwitchTurn.round = 0;
                 break;
             default:
                 break;
         }
 
         //发送消息切换回合
-        MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
         NetManager.Send(msgSwitchTurn);
     }
 
@@ -451,7 +453,7 @@ public class GamePanel : BasePanel
         }
     }
 
-    //成为地主，跟换地主图片素材
+    //成为地主，跟换地主图片素材，并把三张底牌分配到玩家手中
     public void TurnLandLord()
     {
         //更换图片
