@@ -13,6 +13,69 @@ public class CardManager
     public static int maxHandSize = 17;
     public static Dictionary<string,Card> nameCards = new Dictionary<string,Card>();
 
+    /// <summary>
+    /// 出牌的所有类型
+    /// </summary>
+    public enum CardType
+    {
+        /// <summary>
+        /// 单张
+        /// </summary>
+        SINGLE,
+        /// <summary>
+        /// 对子
+        /// </summary>
+        PAIR,
+        /// <summary>
+        /// 三张
+        /// </summary>
+        TRIPLE,
+        /// <summary>
+        /// 三带一
+        /// </summary>
+        TRIPLE_WITH_SINGLE,
+        /// <summary>
+        /// 三带二
+        /// </summary>
+        TRIPLE_WITH_PAIR,
+        /// <summary>
+        /// 顺子
+        /// </summary>
+        STRAIGHT,
+        /// <summary>
+        /// 连对
+        /// </summary>
+        STRAIGHT_PAIRS,
+        /// <summary>
+        /// 飞机
+        /// </summary>
+        AIRPLANE,
+        /// <summary>
+        /// 飞机带单张，333 444 5 6
+        /// </summary>
+        AIRPLANE_WITH_SINGLES,
+        /// <summary>
+        /// 飞机带对子，333 444 55 66
+        /// </summary>
+        AIRPLANE_WITH_PAIRS,
+        /// <summary>
+        /// 炸弹
+        /// </summary>
+        BOMB,
+        /// <summary>
+        /// 王炸
+        /// </summary>
+        JOKER_BOMB,
+        /// <summary>
+        /// 四代二
+        /// </summary>
+        FOUR_WITH_TWO,
+        /// <summary>
+        /// 无效出牌
+        /// </summary>
+        INVALID,
+    }
+
     public static void Init()
     {
         //四种花色
@@ -72,6 +135,36 @@ public class CardManager
                     cards[j - 1] = temp;
                 }
             }
+        }
+        return cards;
+    }
+
+    /// <summary>
+    /// Card数组转成CardInfo数组
+    /// </summary>
+    /// <param name="cards"></param>
+    /// <returns></returns>
+    public static CardInfo[] GetCardInfos(Card[] cards)
+    {
+        CardInfo[] cardInfos = new CardInfo[cards.Length];
+        for (int i = 0; i < cardInfos.Length; i++)
+        {
+            cardInfos[i] = cards[i].GetCardInfo();
+        }
+        return cardInfos;
+    }
+
+    /// <summary>
+    /// CardInfo数组转成Card数组
+    /// </summary>
+    /// <param name="cardInfos"></param>
+    /// <returns></returns>
+    public static Card[] GetCards(CardInfo[] cardInfos)
+    {
+        Card[] cards = new Card[cardInfos.Length];
+        for (int i = 0; i < cards.Length; i++)
+        {
+            cards[i] = new Card(cardInfos[i].suit, cardInfos[i].rank);
         }
         return cards;
     }

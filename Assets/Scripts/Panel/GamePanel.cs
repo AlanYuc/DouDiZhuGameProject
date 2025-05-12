@@ -74,12 +74,15 @@ public class GamePanel : BasePanel
         NetManager.AddMsgListener("MsgReStart", OnMsgReStart);
         NetManager.AddMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
         NetManager.AddMsgListener("MsgRobLandlord", OnMsgRobLandlord);
+        NetManager.AddMsgListener("MsgPlayCards", OnMsgPlayCards);
 
         //添加按钮事件
         callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
         notCallLandlordButton.onClick.AddListener(OnNotCallLandlordButtonClick);
         robLandlordButton.onClick.AddListener(OnRobLandlordButtonClick);
         notRobLandlordButton.onClick.AddListener(OnNotRobLandlordButtonClick);
+        playCardButton.onClick.AddListener(OnPlayCardButtonClick);
+        notPlayCardButton.onClick.AddListener(OnNotPlayCardButtonClick);
 
         //发送请求消息，获取同桌的左右玩家的id
         MsgGetOtherPlayers msgGetOtherPlayers = new MsgGetOtherPlayers();
@@ -104,6 +107,7 @@ public class GamePanel : BasePanel
         NetManager.RemoveMsgListener("MsgReStart", OnMsgReStart);
         NetManager.RemoveMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
         NetManager.RemoveMsgListener("MsgRobLandlord", OnMsgRobLandlord);
+        NetManager.RemoveMsgListener("MsgPlayCards", OnMsgPlayCards);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
@@ -154,6 +158,7 @@ public class GamePanel : BasePanel
 
         for (int i = 0; i < cards.Length; i++)
         {
+            //根据牌的名字生成牌的对象，并获取修改图片资源
             string name = CardManager.GetName(cards[i]);
             GameObject cardObj = new GameObject(name);
             Image image = cardObj.AddComponent<Image>();
@@ -162,6 +167,9 @@ public class GamePanel : BasePanel
             image.rectTransform.sizeDelta = new Vector2(80, 100);
             cardObj.transform.SetParent(cardsTrans, false);
             cardObj.layer = LayerMask.NameToLayer("UI");
+
+            //把脚本挂上去
+            cardObj.AddComponent<CardUI>();
         }
     }
 
@@ -370,7 +378,19 @@ public class GamePanel : BasePanel
     }
 
     /// <summary>
-    /// 
+    /// 处理出牌的消息
+    /// </summary>
+    /// <param name="msgBase"></param>
+    public void OnMsgPlayCards(MsgBase msgBase)
+    {
+        MsgPlayCards msgPlayCards = msgBase as MsgPlayCards;
+
+        //测试出牌类型的判断
+        Debug.Log("GamePanel.OnMsgPlayCards. 出牌的类型为：" + (CardManager.CardType)msgPlayCards.cardType);
+    }
+
+    /// <summary>
+    /// 抢地主
     /// </summary>
     /// <param name="msgBase"></param>
     public void OnMsgRobLandlord(MsgBase msgBase)
@@ -525,5 +545,24 @@ public class GamePanel : BasePanel
         MsgRobLandlord msgRobLandlord = new MsgRobLandlord();
         msgRobLandlord.isRob = false;
         NetManager.Send(msgRobLandlord);
+    }
+
+    /// <summary>
+    /// 玩家点击"出牌"按钮
+    /// </summary>
+    public void OnPlayCardButtonClick()
+    {
+        MsgPlayCards msgPlayCards = new MsgPlayCards();
+        msgPlayCards.isPlay = true;
+        msgPlayCards.cardInfos = CardManager.GetCardInfos(GameManager.selectCards.ToArray());
+        NetManager.Send(msgPlayCards);
+    }
+
+    /// <summary>
+    /// 玩家点击"不出"按钮
+    /// </summary>
+    public void OnNotPlayCardButtonClick()
+    {
+
     }
 }

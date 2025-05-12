@@ -70,5 +70,17 @@ public class Card
         this.suit = (Suit)suit;
         this.rank = (Rank)rank;
     }
+
+    /// <summary>
+    /// Card转成CardInfo
+    /// </summary>
+    /// <returns></returns>
+    public CardInfo GetCardInfo()
+    {
+        CardInfo cardInfo = new CardInfo();
+        cardInfo.suit = (int)suit;
+        cardInfo.rank = (int)rank;
+        return cardInfo;
+    }
 }
 
