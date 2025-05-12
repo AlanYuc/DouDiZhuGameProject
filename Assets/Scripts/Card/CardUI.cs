@@ -63,7 +63,7 @@ public class CardUI : MonoBehaviour,IPointerDownHandler,IPointerEnterHandler
                 if (IsUp)
                 {
                     //牌如果已经升起，就还原，并且把牌从已选择的手牌中去除
-                    transform.position -= Vector3.up * 6;
+                    transform.position -= Vector3.up * 15;
                     IsUp = false;
                     if (GameManager.selectCards.Contains(card))
                     {
@@ -72,7 +72,7 @@ public class CardUI : MonoBehaviour,IPointerDownHandler,IPointerEnterHandler
                 }
                 else
                 {
-                    transform.position += Vector3.up * 6;
+                    transform.position += Vector3.up * 15;
                     IsUp = true;
                     if (!GameManager.selectCards.Contains(card))
                     {
