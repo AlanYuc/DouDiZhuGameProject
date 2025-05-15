@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 玩家当前状态的种类
@@ -165,6 +166,33 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(rightPlayerInfoObj.transform.GetChild(i).gameObject);
             }
+        }
+    }
+
+    public static void SyncGenerateCard(string id, string name)
+    {
+        //读取Card文件夹下的图片
+        name = "Card/" + name;
+        Sprite sprite = Resources.Load<Sprite>(name);
+        
+        if(id == leftPlayerId)
+        {
+            GameObject go = new GameObject(name);
+            Image image = go.AddComponent<Image>();
+            image.sprite = sprite;
+            image.SetNativeSize();
+            go.transform.localScale = new Vector3(0.8f, 0.8f);
+            go.transform.SetParent(leftPlayerInfoObj.transform, false);
+        }
+
+        if(id == rightPlayerId)
+        {
+            GameObject go = new GameObject(name);
+            Image image = go.AddComponent<Image>();
+            image.sprite = sprite;
+            image.SetNativeSize();
+            go.transform.localScale = new Vector3(0.8f, 0.8f);
+            go.transform.SetParent(rightPlayerInfoObj.transform, false);
         }
     }
 }
