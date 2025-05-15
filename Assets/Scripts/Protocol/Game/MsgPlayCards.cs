@@ -19,6 +19,14 @@ public class MsgPlayCards : MsgBase
     /// 出牌的类型
     /// </summary>
     public int cardType;
+    /// <summary>
+    /// 是否处理完成
+    /// </summary>
+    public bool result;
+    /// <summary>
+    /// 是否允许 不出牌 的行为。默认是允许。
+    /// </summary>
+    public bool canNotPlay = true;
 
     public MsgPlayCards()
     {
