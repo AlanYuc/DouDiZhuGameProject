@@ -124,6 +124,11 @@ public class GamePanel : BasePanel
         //手牌排序
         Card[] cards = CardManager.CardSort(GameManager.cards.ToArray());
 
+        //更新玩家手牌,后续出牌阶段就不用频繁的排序
+        GameManager.cards.Clear();
+        //AddRange批量添加
+        GameManager.cards.AddRange(cards);
+
         //实例化生成卡牌
         GenerateCard(cards);
 
@@ -456,9 +461,7 @@ public class GamePanel : BasePanel
                     }
                 }
 
-                //把手牌重新生成一遍
-                Card[] remainCards = CardManager.CardSort(GameManager.cards.ToArray());
-                GenerateCard(remainCards);
+                GenerateCard(GameManager.cards.ToArray());
             }
 
             MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
@@ -549,10 +552,9 @@ public class GamePanel : BasePanel
         GenerateCard(cards);
 
         //更新玩家手牌的数据
-        for(int i = 0; i < 3; i++)
-        {
-            GameManager.cards.Add(GameManager.threeCards[i]);
-        }
+        GameManager.cards.Clear();
+        //AddRange批量添加
+        GameManager.cards.AddRange(cards);
     }
 
     /// <summary>
