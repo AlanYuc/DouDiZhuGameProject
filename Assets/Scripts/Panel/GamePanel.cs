@@ -389,6 +389,81 @@ public class GamePanel : BasePanel
 
         //测试出牌类型的判断
         Debug.Log("GamePanel.OnMsgPlayCards. 出牌的类型为：" + (CardManager.CardType)msgPlayCards.cardType);
+
+        //更新 该玩家是否可以 不出牌 的逻辑
+        //该消息会发送给所有玩家，
+        //虽然不允许不出牌时所有玩家的GameManager.canNotPlay都会修改，但只有正在操作的玩家会有需要该值，
+        //下次出牌等操作后，该值会被重新赋值
+        GameManager.canNotPlay = msgPlayCards.canNotPlay;
+
+        //处理左右玩家的出牌逻辑，出牌就显示具体的牌，不出就显示不出
+        if (msgPlayCards.result)
+        {
+            if (msgPlayCards.isPlay)
+            {
+                Card[] cards = CardManager.GetCards(msgPlayCards.cardInfos);
+                Array.Sort(cards, (Card card1, Card card2) => (int)card1.rank - (int)card2.rank);
+
+                //先清空需要显示的区域
+                GameManager.SyncDestroy(msgPlayCards.id);
+
+                //生成同步的卡牌
+                for(int i = 0; i < cards.Length; i++)
+                {
+                    GameManager.SyncGenerateCard(msgPlayCards.id, CardManager.GetName(cards[i]));
+                }
+            }
+            else
+            {
+                GameManager.SyncDestroy(msgPlayCards.id);
+                GameManager.SyncGenerate(msgPlayCards.id, "Word/NotPlayCard");
+            }
+        }
+
+        //后续处理当前客户端玩家的出牌逻辑
+        if(msgPlayCards.id != GameManager.playerId)
+        {
+            return;
+        }
+
+        //返回结果为true，说明操作成功
+        if (msgPlayCards.result)
+        {
+            //第一种，出牌成功
+            if (msgPlayCards.isPlay)
+            {
+                Card[] cards = CardManager.GetCards(msgPlayCards.cardInfos);
+                Array.Sort(cards, (Card card1, Card card2) => (int)card1.rank - (int)card2.rank);
+
+                //出牌后，把客户端储存的数据中的相关卡牌删除
+                for (int i = 0; i < cards.Length; i++)
+                {
+                    //删除手牌
+                    for(int j = GameManager.cards.Count - 1; j >= 0; j--)
+                    {
+                        if (GameManager.cards[j].suit == cards[i].suit && GameManager.cards[j].rank == cards[i].rank)
+                        {
+                            GameManager.cards.RemoveAt(j);
+                        }
+                    }
+                    //删除选中的牌
+                    for(int j =GameManager.selectCards.Count - 1; j >= 0; j--)
+                    {
+                        if (GameManager.selectCards[j].suit == cards[i].suit && GameManager.selectCards[j].rank == cards[i].rank)
+                        {
+                            GameManager.selectCards.RemoveAt(j);
+                        }
+                    }
+                }
+
+                //把手牌重新生成一遍
+                Card[] remainCards = CardManager.CardSort(GameManager.cards.ToArray());
+                GenerateCard(remainCards);
+            }
+
+            MsgSwitchTurn msgSwitchTurn = new MsgSwitchTurn();
+            NetManager.Send(msgSwitchTurn);
+        }
     }
 
     /// <summary>
@@ -472,6 +547,12 @@ public class GamePanel : BasePanel
 
         cards = CardManager.CardSort(cards);
         GenerateCard(cards);
+
+        //更新玩家手牌的数据
+        for(int i = 0; i < 3; i++)
+        {
+            GameManager.cards.Add(GameManager.threeCards[i]);
+        }
     }
 
     /// <summary>
