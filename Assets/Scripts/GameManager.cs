@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 /// <summary>
@@ -69,6 +70,10 @@ public class GameManager : MonoBehaviour
     /// 坐在右边的玩家生成的游戏物体，比如叫地主、抢地主的状态信息等
     /// </summary>
     public static GameObject rightPlayerInfoObj;
+    /// <summary>
+    /// 自己玩家生成的游戏物体，比如叫地主、抢地主的状态信息等
+    /// </summary>
+    public static GameObject playerObj;
     /// <summary>
     /// 上方的底牌
     /// </summary>
@@ -143,6 +148,13 @@ public class GameManager : MonoBehaviour
             GameObject go = Instantiate(resource, Vector3.zero, Quaternion.identity);
             go.transform.SetParent(rightPlayerInfoObj.transform, false);
         }
+
+        //当前需要生成自己玩家的信息
+        if (playerId == id)
+        {
+            GameObject go = Instantiate(resource, Vector3.zero, Quaternion.identity);
+            go.transform.SetParent(playerObj.transform, false);
+        }
     }
 
     /// <summary>
@@ -163,6 +175,14 @@ public class GameManager : MonoBehaviour
         if (id == rightPlayerId)
         {
             for (int i = rightPlayerInfoObj.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(rightPlayerInfoObj.transform.GetChild(i).gameObject);
+            }
+        }
+
+        if(id == playerId)
+        {
+            for (int i = playerObj.transform.childCount - 1; i >= 0; i--)
             {
                 Destroy(rightPlayerInfoObj.transform.GetChild(i).gameObject);
             }
@@ -193,6 +213,36 @@ public class GameManager : MonoBehaviour
             image.SetNativeSize();
             go.transform.localScale = new Vector3(0.8f, 0.8f);
             go.transform.SetParent(rightPlayerInfoObj.transform, false);
+        }
+
+        if (id == playerId)
+        {
+            GameObject go = new GameObject(name);
+            Image image = go.AddComponent<Image>();
+            image.sprite = sprite;
+            image.SetNativeSize();
+            go.transform.localScale = new Vector3(0.8f, 0.8f);
+            go.transform.SetParent(playerObj.transform, false);
+        }
+    }
+
+    /// <summary>
+    /// 同步更新左右玩家的卡牌数量
+    /// </summary>
+    /// <param name="id">玩家id</param>
+    /// <param name="count">出牌的数量</param>
+    public static void SyncCardNumber(string id, int count)
+    {
+        if (id == leftPlayerId)
+        {
+            Text text = leftPlayerInfoObj.transform.parent.Find("Card_Img/CardNumber_Text").GetComponent<Text>();
+            text.text = (int.Parse(text.text) - count).ToString();
+        }
+
+        if (id == rightPlayerId)
+        {
+            Text text = rightPlayerInfoObj.transform.parent.Find("Card_Img/CardNumber_Text").GetComponent<Text>();
+            text.text = (int.Parse(text.text) - count).ToString();
         }
     }
 }

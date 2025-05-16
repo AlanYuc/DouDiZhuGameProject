@@ -56,6 +56,7 @@ public class GamePanel : BasePanel
         //初始化组件
         GameManager.leftPlayerInfoObj   = skin.transform.Find("Player_Left/InfoObj").gameObject;
         GameManager.rightPlayerInfoObj  = skin.transform.Find("Player_Right/InfoObj").gameObject;
+        GameManager.playerObj           = skin.transform.Find("Player/InfoObj").gameObject;
         GameManager.threeCardsObj       = skin.transform.Find("ThreeCards").gameObject;
 
         callLandlordButton.gameObject.SetActive(false);
@@ -409,6 +410,9 @@ public class GamePanel : BasePanel
                 Card[] cards = CardManager.GetCards(msgPlayCards.cardInfos);
                 Array.Sort(cards, (Card card1, Card card2) => (int)card1.rank - (int)card2.rank);
 
+                //更新玩家卡牌数量
+                GameManager.SyncCardNumber(msgPlayCards.id, cards.Length);
+
                 //先清空需要显示的区域
                 GameManager.SyncDestroy(msgPlayCards.id);
 
@@ -558,7 +562,7 @@ public class GamePanel : BasePanel
     }
 
     /// <summary>
-    /// 如果是左右两边的玩家成为地主，更改他的地主图片
+    /// 如果是左右两边的玩家成为地主，更改他的地主图片,以及牌的数量
     /// </summary>
     /// <param name="id"></param>
     public void SyncLandLord(string id)
@@ -570,11 +574,19 @@ public class GamePanel : BasePanel
         {
             //左边的玩家是地主
             GameManager.leftPlayerInfoObj.transform.parent.Find("Image").GetComponent<Image>().sprite = sprite;
+
+            //更新牌的数量
+            Text text = GameManager.leftPlayerInfoObj.transform.parent.Find("Card_Img/CardNumber_Text").GetComponent<Text>();
+            text.text = "20";
         }
         if (id == GameManager.rightPlayerId)
         {
             //右边的玩家是地主
             GameManager.rightPlayerInfoObj.transform.parent.Find("Image").GetComponent<Image>().sprite = sprite;
+
+            //更新牌的数量
+            Text text = GameManager.rightPlayerInfoObj.transform.parent.Find("Card_Img/CardNumber_Text").GetComponent<Text>();
+            text.text = "20";
         }
     }
 
@@ -648,6 +660,8 @@ public class GamePanel : BasePanel
     /// </summary>
     public void OnNotPlayCardButtonClick()
     {
-
+        MsgPlayCards msgPlayCards = new MsgPlayCards();
+        msgPlayCards.isPlay = false;
+        NetManager.Send(msgPlayCards);
     }
 }
