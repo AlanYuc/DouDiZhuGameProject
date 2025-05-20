@@ -402,6 +402,13 @@ public class GamePanel : BasePanel
         //下次出牌等操作后，该值会被重新赋值
         GameManager.canNotPlay = msgPlayCards.canNotPlay;
 
+        //判断是否对局结束
+        if(msgPlayCards.win == 1 || msgPlayCards.win == 2)
+        {
+            PanelManager.Open<ScorePanel>();
+            return;
+        }
+
         //处理左右玩家的出牌逻辑，出牌就显示具体的牌，不出就显示不出
         if (msgPlayCards.result)
         {
@@ -511,6 +518,7 @@ public class GamePanel : BasePanel
             RevealThreeCards(GameManager.threeCards.ToArray());
             //切换玩家状态为出牌阶段
             GameManager.status = PlayerStatus.Play;
+            msgSwitchTurn.round = 0;
         }
 
         //抢地主的不是自己，后续逻辑不需要执行
@@ -529,7 +537,7 @@ public class GamePanel : BasePanel
         else
         {
             //下一家需要抢地主  
-            msgSwitchTurn.round = 1;
+            //msgSwitchTurn.round = 1;
             NetManager.Send(msgSwitchTurn);
             return;
         }
