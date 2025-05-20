@@ -27,6 +27,10 @@ public class MsgPlayCards : MsgBase
     /// 是否允许 不出牌 的行为。默认是允许。
     /// </summary>
     public bool canNotPlay = true;
+    /// <summary>
+    /// 0继续游戏，1农民胜利，2地主胜利
+    /// </summary>
+    public int win;
 
     public MsgPlayCards()
     {
