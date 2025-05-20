@@ -14,6 +14,10 @@ public class ScorePanel : BasePanel
     private Transform player3Trans;
     private Button exitBtn;
     private Button restartBtn;
+    /// <summary>
+    /// 对局结果，1表示农民获胜，2表示地主获胜
+    /// </summary>
+    private int winResult;
 
     /// <summary>
     /// 储存结算界面每个玩家的信息对象的Transform
@@ -52,6 +56,11 @@ public class ScorePanel : BasePanel
 
         playerBeansDelta.Clear();
 
+        if (para.Length >= 1)
+        {
+            winResult = (int)para[0];
+        }
+
         //先隐藏标题信息，根据玩家的胜负决定显示的内容
         farmersWinImgTrans.gameObject.SetActive(false);
         farmersLoseImgTrans.gameObject.SetActive(false);
@@ -73,6 +82,7 @@ public class ScorePanel : BasePanel
 
     public void ShowPlayersInfo(int multiplier)
     {
+        //显示结算面板数据
         foreach(string id in playersDic.Keys)
         {
             Text idText = playersDic[id].Find("ID_Text").GetComponent<Text>();
@@ -82,6 +92,44 @@ public class ScorePanel : BasePanel
             idText.text = id;
             multiplierText.text = multiplier.ToString();
             beanText.text = playerBeansDelta[id].ToString();
+        }
+
+        //显示上方的获胜的图片
+        if(winResult == 2)
+        {
+            //地主获胜
+            if (GameManager.isLandLord)
+            {
+                farmersWinImgTrans.gameObject.SetActive(false);
+                farmersLoseImgTrans.gameObject.SetActive(false);
+                landlordWinImgTrans.gameObject.SetActive(true);
+                landlordLoseImgTrans.gameObject.SetActive(false);
+            }
+            else
+            {
+                farmersWinImgTrans.gameObject.SetActive(false);
+                farmersLoseImgTrans.gameObject.SetActive(true);
+                landlordWinImgTrans.gameObject.SetActive(false);
+                landlordLoseImgTrans.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            //winResult == 1 农民获胜
+            if (GameManager.isLandLord)
+            {
+                farmersWinImgTrans.gameObject.SetActive(false);
+                farmersLoseImgTrans.gameObject.SetActive(false);
+                landlordWinImgTrans.gameObject.SetActive(false);
+                landlordLoseImgTrans.gameObject.SetActive(true);
+            }
+            else
+            {
+                farmersWinImgTrans.gameObject.SetActive(true);
+                farmersLoseImgTrans.gameObject.SetActive(false);
+                landlordWinImgTrans.gameObject.SetActive(false);
+                landlordLoseImgTrans.gameObject.SetActive(false);
+            }
         }
     }
 

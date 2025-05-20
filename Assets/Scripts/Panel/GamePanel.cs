@@ -405,7 +405,7 @@ public class GamePanel : BasePanel
         //判断是否对局结束
         if(msgPlayCards.win == 1 || msgPlayCards.win == 2)
         {
-            PanelManager.Open<ScorePanel>();
+            PanelManager.Open<ScorePanel>(msgPlayCards.win);
             return;
         }
 
