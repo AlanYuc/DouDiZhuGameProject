@@ -3,7 +3,7 @@ guid: 2120069131bfebf498a929992e50af42
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -42,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -63,6 +64,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -74,11 +77,1794 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 605
+        width: 857
+        height: 419
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93e2c4d0f3f4ce94083b60886bb366f9
+      internalID: -1206988452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_1
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 597
+        width: 157
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df4133e713b05fb4a922f1e177c8ca4f
+      internalID: -1244592163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_2
+      rect:
+        serializedVersion: 2
+        x: 866
+        y: 684
+        width: 38
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16f3e53a03e10c948bd3d9459dd9aee4
+      internalID: -1929524268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_3
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 691
+        width: 4
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ce3e5b6762af804a8054b01762a1de6
+      internalID: -1906943033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_4
+      rect:
+        serializedVersion: 2
+        x: 918
+        y: 595
+        width: 92
+        height: 428
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 582e812307675e64b9ec4e20e7df94f3
+      internalID: 920071248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_5
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 487
+        width: 270
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b253d2ddb693dda43b4d2ce1f17e3ea3
+      internalID: 549660676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_7
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 426
+        width: 321
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f38dea77e9ea9784c8dcbc1ceb131c2b
+      internalID: 697488831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_8
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 443
+        width: 95
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 809aaddbc9b9f454bb03a25e1362e4d0
+      internalID: -653614110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_9
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 483
+        width: 190
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80d5684e49f037f4bb5bbae7dc42439f
+      internalID: -2146224826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_10
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 527
+        width: 78
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a23d8909f2d44fc46a5154108fb8ecb3
+      internalID: -1013029317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_11
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 384
+        width: 270
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9318970a706a4b641a7004b4b59c236e
+      internalID: 611023684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_13
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 427
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f8cf3ee7617b94ba29d08c921251e4
+      internalID: 474346736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_14
+      rect:
+        serializedVersion: 2
+        x: 758
+        y: 419
+        width: 53
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f61f738d8218e24eb981f71c4f04437
+      internalID: 1790259639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_15
+      rect:
+        serializedVersion: 2
+        x: 818
+        y: 435
+        width: 39
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fab0e2008b4f0fa479f6e20dadac2bfb
+      internalID: -1581296462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_16
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 435
+        width: 38
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca1c99f19da66194591dc346c3d144c0
+      internalID: 1946941848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_17
+      rect:
+        serializedVersion: 2
+        x: 964
+        y: 420
+        width: 27
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ccdfb44e17455343aacd47b8136a4f9
+      internalID: -336927134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_18
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 394
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ce289c1d9b8b2e439a6a6929af2e664
+      internalID: -1030952515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_19
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 366
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84fa9996ae59de441bf8ea93f22437c0
+      internalID: 1661165632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_20
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 383
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea1292c3dbd566441a0a3598cb87232b
+      internalID: 1023950922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_21
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 382
+        width: 12
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 197665117040fe744a0fb3f8c72a144d
+      internalID: -687535806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_22
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 366
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9403a7c0cf73ea5499e0b0413a122531
+      internalID: -408681825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_23
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 361
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc7adbf0ce3c7044e8cb640c83287a49
+      internalID: -121196869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_24
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 361
+        width: 33
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 082ea1d6570acd348ba6556621d4c5b3
+      internalID: 1675535143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_25
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 361
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaf3e6e2fb9d4554895cad7755a9251c
+      internalID: 1681009468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_26
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 361
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ecd5eff00142cd458adffb9a51f7c52
+      internalID: -1635001624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_27
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 361
+        width: 42
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48fdd49d959be164aa4552cf4c589a28
+      internalID: -717771133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_28
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 361
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 968b89badb417384badb47948ca6ce04
+      internalID: 156207311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_29
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 361
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79e23b1fb487e75419fccf8465364d29
+      internalID: 406918507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_30
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 361
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 200f5edead8331746bd31acf825fd798
+      internalID: -2069331242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_31
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 361
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ca136a54043f3c428ed551020a9d5c0
+      internalID: -1041217884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_32
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 361
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3587aba839123bd418946c9325138efb
+      internalID: 1736467843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_33
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 347
+        width: 15
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 645948e577088bc44b4851479d5d75cb
+      internalID: 608364036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_34
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 365
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b47d1622fc97ffa4299d668075b200a1
+      internalID: -1626304579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_35
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 354
+        width: 13
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a7ddd4dea2142b40abadcf4fdae0ccb
+      internalID: 1524495620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_36
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 370
+        width: 12
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01799503eb506454e82a184709d04127
+      internalID: 478280360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_37
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 371
+        width: 12
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 653765bf7c0756840ba9324d387a14d5
+      internalID: 2145531250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_38
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 359
+        width: 12
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a35114eed0acc404da6bd94b99431139
+      internalID: -2032343585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_39
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 373
+        width: 32
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 365c2a847538ab340842cd325156bc8e
+      internalID: -2063091003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_40
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 278
+        width: 270
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ba44dda20801404193c306707153f69
+      internalID: 507514453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_42
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 326
+        width: 14
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbdd2282c149e864daff8e1d4b6a3c53
+      internalID: -1611941354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_43
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 350
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c139c4b156b7aa428390c18fb2e3b3d
+      internalID: 1779030934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_44
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 334
+        width: 12
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0698c3c96f64c748b50d2c57edf652d
+      internalID: 376097164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_45
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 332
+        width: 15
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b13780b135c22b4bab28b14fc8818f1
+      internalID: -1622543263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_46
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 301
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc7f84afa9d055543adfb9148ac0b420
+      internalID: -720995124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_47
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 301
+        width: 33
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28ff23ddb4dbded459238dd2eeadacbe
+      internalID: 249594630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_48
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 301
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 850d31bad34433d429cf17d82ab0693c
+      internalID: -314025643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_49
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 301
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5afe3fc2e4eaf54d915d224d99d7679
+      internalID: -1358433175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_50
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 301
+        width: 42
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3283da345d11ae419d90e39db89bfaf
+      internalID: -1474840155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_51
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 301
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b49e098520e5c264fa547a08a474beb1
+      internalID: 49817924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_52
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 301
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5309c4effbf81164eaabef9e9e276297
+      internalID: 1802013777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_53
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 301
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 243cc94005a6d374596cf1d2e388d08c
+      internalID: -811272299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_54
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 301
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93184c225f3301240966eef844857ed8
+      internalID: -89321340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_55
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 301
+        width: 40
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61c88a9351447c44084805800b7e84b3
+      internalID: -188965005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_56
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 305
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 824a1155c2f4b5248a30cd3c9357b8ca
+      internalID: 2012275317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_57
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 328
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72c845c0bd573674ebe0261cdea1ff48
+      internalID: 1984488171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_58
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 317
+        width: 13
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f6e8b4e6911a6b40a0d94d0d1881b65
+      internalID: -1511114922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_59
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 311
+        width: 14
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43d251bfa048624478967b465f6423d1
+      internalID: 452159080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_60
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 306
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8606018d0ee3c347b3e1d42c3c6351d
+      internalID: -1853710828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_61
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 313
+        width: 32
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74af41c850ed0aa44b0fdbaa9640665c
+      internalID: -1339890205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_62
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 307
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 575d25b17a4fc7f46b18ff3b21724c3e
+      internalID: -1118993830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_63
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 173
+        width: 270
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9c397d804bf77a4b99e80d197d1a9a4
+      internalID: -1126608495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_65
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 147
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3daf1975c433cf4bbf2a5f06b19b8d8
+      internalID: -818204614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_66
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 206
+        width: 168
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1daaba1c6ad12b848843d69ca4615803
+      internalID: -2019431743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_67
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 209
+        width: 84
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a840b69a9b7a5c14683cfac20a61ae22
+      internalID: -1115699707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_68
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 193
+        width: 89
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddaf5b628d1fb68489501a64fd2e9855
+      internalID: 32752430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_69
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 209
+        width: 48
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b374c8301259394896c5eeb4218bde3
+      internalID: -1574017454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_70
+      rect:
+        serializedVersion: 2
+        x: 939
+        y: 172
+        width: 71
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28244ab5c5f2d1d4482a805b5dfea56a
+      internalID: -1891356457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_71
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 165
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4bab3e77e4230b4eb10bd6725b7817a
+      internalID: 119300844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_72
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 165
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8b32dc1419d3c24abcfaec71006379b
+      internalID: 951476678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_73
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 165
+        width: 32
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5d1b61614cbbb447880321a7f9a8153
+      internalID: 97260039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_74
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 165
+        width: 33
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 891a404f26028d74695608f0301ad65a
+      internalID: 2025877175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_75
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 176
+        width: 8
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b0ca55a8ef23ec45a6f0d817d0487a3
+      internalID: -1428535927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_76
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 113
+        width: 74
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d77e7131a01bd641aaf233f0d188fd8
+      internalID: -2094553904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_77
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 75
+        width: 215
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9862e49733e57b74fa20c972a6fd221b
+      internalID: 1746213447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_78
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 167
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40c6a7fcbaff8c04ea276bced37c2e6a
+      internalID: 886616228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_79
+      rect:
+        serializedVersion: 2
+        x: 959
+        y: 119
+        width: 64
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e53e44f3de693f4fb7b95dca0ed386c
+      internalID: -1427021829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_80
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 82
+        width: 140
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67cdd23a2c9d464469a1d03c7bea7dea
+      internalID: -43756955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_81
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 89
+        width: 40
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb1a23897d36e3b4d9cf531afcb5713f
+      internalID: 645896789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_82
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 110
+        width: 44
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f05b3b27b83484aa0d09778e8a2cea
+      internalID: 1964937897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_83
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 42
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 333b085ae4ca8024c942ec5402002455
+      internalID: -803326619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_84
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 42
+        width: 129
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9563b918ee8ffc4992a7b4a124f2486
+      internalID: -633170993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_85
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 42
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66f2a82c3554f4944914c6e7532413d1
+      internalID: 718510428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HLDDZ_Balance_2x_86
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 3
+        width: 310
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fda4d6349c33324a804c89a8d4ace2c
+      internalID: -1369236269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -89,10 +1875,96 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
-  spritePackingTag: 
+    nameFileIdTable:
+      HLDDZ_Balance_2x_0: -1206988452
+      HLDDZ_Balance_2x_1: -1244592163
+      HLDDZ_Balance_2x_10: -1013029317
+      HLDDZ_Balance_2x_11: 611023684
+      HLDDZ_Balance_2x_12: 1399841815
+      HLDDZ_Balance_2x_13: 474346736
+      HLDDZ_Balance_2x_14: 1790259639
+      HLDDZ_Balance_2x_15: -1581296462
+      HLDDZ_Balance_2x_16: 1946941848
+      HLDDZ_Balance_2x_17: -336927134
+      HLDDZ_Balance_2x_18: -1030952515
+      HLDDZ_Balance_2x_19: 1661165632
+      HLDDZ_Balance_2x_2: -1929524268
+      HLDDZ_Balance_2x_20: 1023950922
+      HLDDZ_Balance_2x_21: -687535806
+      HLDDZ_Balance_2x_22: -408681825
+      HLDDZ_Balance_2x_23: -121196869
+      HLDDZ_Balance_2x_24: 1675535143
+      HLDDZ_Balance_2x_25: 1681009468
+      HLDDZ_Balance_2x_26: -1635001624
+      HLDDZ_Balance_2x_27: -717771133
+      HLDDZ_Balance_2x_28: 156207311
+      HLDDZ_Balance_2x_29: 406918507
+      HLDDZ_Balance_2x_3: -1906943033
+      HLDDZ_Balance_2x_30: -2069331242
+      HLDDZ_Balance_2x_31: -1041217884
+      HLDDZ_Balance_2x_32: 1736467843
+      HLDDZ_Balance_2x_33: 608364036
+      HLDDZ_Balance_2x_34: -1626304579
+      HLDDZ_Balance_2x_35: 1524495620
+      HLDDZ_Balance_2x_36: 478280360
+      HLDDZ_Balance_2x_37: 2145531250
+      HLDDZ_Balance_2x_38: -2032343585
+      HLDDZ_Balance_2x_39: -2063091003
+      HLDDZ_Balance_2x_4: 920071248
+      HLDDZ_Balance_2x_40: 507514453
+      HLDDZ_Balance_2x_41: 1476093262
+      HLDDZ_Balance_2x_42: -1611941354
+      HLDDZ_Balance_2x_43: 1779030934
+      HLDDZ_Balance_2x_44: 376097164
+      HLDDZ_Balance_2x_45: -1622543263
+      HLDDZ_Balance_2x_46: -720995124
+      HLDDZ_Balance_2x_47: 249594630
+      HLDDZ_Balance_2x_48: -314025643
+      HLDDZ_Balance_2x_49: -1358433175
+      HLDDZ_Balance_2x_5: 549660676
+      HLDDZ_Balance_2x_50: -1474840155
+      HLDDZ_Balance_2x_51: 49817924
+      HLDDZ_Balance_2x_52: 1802013777
+      HLDDZ_Balance_2x_53: -811272299
+      HLDDZ_Balance_2x_54: -89321340
+      HLDDZ_Balance_2x_55: -188965005
+      HLDDZ_Balance_2x_56: 2012275317
+      HLDDZ_Balance_2x_57: 1984488171
+      HLDDZ_Balance_2x_58: -1511114922
+      HLDDZ_Balance_2x_59: 452159080
+      HLDDZ_Balance_2x_6: 349316348
+      HLDDZ_Balance_2x_60: -1853710828
+      HLDDZ_Balance_2x_61: -1339890205
+      HLDDZ_Balance_2x_62: -1118993830
+      HLDDZ_Balance_2x_63: -1126608495
+      HLDDZ_Balance_2x_64: 131683956
+      HLDDZ_Balance_2x_65: -818204614
+      HLDDZ_Balance_2x_66: -2019431743
+      HLDDZ_Balance_2x_67: -1115699707
+      HLDDZ_Balance_2x_68: 32752430
+      HLDDZ_Balance_2x_69: -1574017454
+      HLDDZ_Balance_2x_7: 697488831
+      HLDDZ_Balance_2x_70: -1891356457
+      HLDDZ_Balance_2x_71: 119300844
+      HLDDZ_Balance_2x_72: 951476678
+      HLDDZ_Balance_2x_73: 97260039
+      HLDDZ_Balance_2x_74: 2025877175
+      HLDDZ_Balance_2x_75: -1428535927
+      HLDDZ_Balance_2x_76: -2094553904
+      HLDDZ_Balance_2x_77: 1746213447
+      HLDDZ_Balance_2x_78: 886616228
+      HLDDZ_Balance_2x_79: -1427021829
+      HLDDZ_Balance_2x_8: -653614110
+      HLDDZ_Balance_2x_80: -43756955
+      HLDDZ_Balance_2x_81: 645896789
+      HLDDZ_Balance_2x_82: 1964937897
+      HLDDZ_Balance_2x_83: -803326619
+      HLDDZ_Balance_2x_84: -633170993
+      HLDDZ_Balance_2x_85: 718510428
+      HLDDZ_Balance_2x_86: -1369236269
+      HLDDZ_Balance_2x_9: -2146224826
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
