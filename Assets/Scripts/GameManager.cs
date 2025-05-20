@@ -184,7 +184,7 @@ public class GameManager : MonoBehaviour
         {
             for (int i = playerObj.transform.childCount - 1; i >= 0; i--)
             {
-                Destroy(rightPlayerInfoObj.transform.GetChild(i).gameObject);
+                Destroy(playerObj.transform.GetChild(i).gameObject);
             }
         }
     }
