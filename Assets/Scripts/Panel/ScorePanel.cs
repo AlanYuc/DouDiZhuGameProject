@@ -27,6 +27,10 @@ public class ScorePanel : BasePanel
     /// 储存结算界面每个玩家的欢乐豆变化数据
     /// </summary>
     private Dictionary<string , int> playerBeansDelta = new Dictionary<string , int>();
+    /// <summary>
+    /// 管理音效
+    /// </summary>
+    private AudioSource audioSource;
 
 
     public override void OnInit()
@@ -47,6 +51,7 @@ public class ScorePanel : BasePanel
         player3Trans            = skin.transform.Find("GameResult/Player3");
         exitBtn                 = skin.transform.Find("Exit_Btn").GetComponent<Button>();
         restartBtn              = skin.transform.Find("Restart_Btn").GetComponent<Button>();
+        audioSource             = skin.transform.Find("Audio Source").GetComponent<AudioSource>();
 
         //将玩家和结算面板玩家信息部分绑定
         playersDic.Clear();
@@ -101,8 +106,10 @@ public class ScorePanel : BasePanel
             beanText.text = playerBeansDelta[id].ToString();
         }
 
+        string audioPath = "Sounds/";
+
         //显示上方的获胜的图片
-        if(winResult == 2)
+        if (winResult == 2)
         {
             //地主获胜
             if (GameManager.isLandLord)
@@ -111,6 +118,8 @@ public class ScorePanel : BasePanel
                 farmersLoseImgTrans.gameObject.SetActive(false);
                 landlordWinImgTrans.gameObject.SetActive(true);
                 landlordLoseImgTrans.gameObject.SetActive(false);
+
+                audioPath = audioPath + "MusicEx_Win";
             }
             else
             {
@@ -118,6 +127,8 @@ public class ScorePanel : BasePanel
                 farmersLoseImgTrans.gameObject.SetActive(true);
                 landlordWinImgTrans.gameObject.SetActive(false);
                 landlordLoseImgTrans.gameObject.SetActive(false);
+
+                audioPath = audioPath + "MusicEx_Lose";
             }
         }
         else
@@ -129,6 +140,8 @@ public class ScorePanel : BasePanel
                 farmersLoseImgTrans.gameObject.SetActive(false);
                 landlordWinImgTrans.gameObject.SetActive(false);
                 landlordLoseImgTrans.gameObject.SetActive(true);
+
+                audioPath = audioPath + "MusicEx_Lose";
             }
             else
             {
@@ -136,8 +149,13 @@ public class ScorePanel : BasePanel
                 farmersLoseImgTrans.gameObject.SetActive(false);
                 landlordWinImgTrans.gameObject.SetActive(false);
                 landlordLoseImgTrans.gameObject.SetActive(false);
+
+                audioPath = audioPath + "MusicEx_Win";
             }
         }
+
+        audioSource.clip = Resources.Load<AudioClip>(audioPath);
+        audioSource.Play();
     }
 
     public void OnMsgGetBeansDelta(MsgBase msgBase)

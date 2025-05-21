@@ -35,6 +35,10 @@ public class GamePanel : BasePanel
     /// "不出"按钮
     /// </summary>
     public Button notPlayCardButton;
+    /// <summary>
+    /// 管理音效
+    /// </summary>
+    public AudioSource audioSource;
 
     public override void OnInit()
     {
@@ -52,6 +56,7 @@ public class GamePanel : BasePanel
         notRobLandlordButton            = skin.transform.Find("NotRobLandlord_Btn").GetComponent<Button>();
         playCardButton                  = skin.transform.Find("PlayCard_Btn").GetComponent<Button>();
         notPlayCardButton               = skin.transform.Find("NotPlayCard_Btn").GetComponent<Button>();
+        audioSource                     = skin.transform.Find("Audio Source").GetComponent<AudioSource>();
 
         //初始化组件
         GameManager.leftPlayerInfoObj   = skin.transform.Find("Player_Left/InfoObj").gameObject;
@@ -300,11 +305,21 @@ public class GamePanel : BasePanel
         //左右两边的玩家根据是否叫地主显示相关信息
         if (msgCallLandlord.isCall)
         {
+            //叫地主音效
+            string audioPath = "Sounds/Man_Order";
+            audioSource.clip = Resources.Load<AudioClip>(audioPath);
+            audioSource.Play();
+
             GameManager.SyncDestroy(msgCallLandlord.id);
             GameManager.SyncGenerate(msgCallLandlord.id, "Word/CallLandlord");
         }
         else
         {
+            //不叫地主音效
+            string audioPath = "Sounds/Man_NoOrder";
+            audioSource.clip = Resources.Load<AudioClip>(audioPath);
+            audioSource.Play();
+
             GameManager.SyncDestroy(msgCallLandlord.id);
             GameManager.SyncGenerate(msgCallLandlord.id, "Word/NotCallLandlord");
         }
@@ -411,6 +426,56 @@ public class GamePanel : BasePanel
             return;
         }
 
+        //处理音效
+        if (msgPlayCards.result)
+        {
+            if (msgPlayCards.isPlay)
+            {
+                string audioPath = "Sounds/";
+                switch (msgPlayCards.cardType)
+                {
+                    case 3:
+                        audioPath = audioPath + "Man_sandaiyi";
+                        break;
+                    case 4:
+                        audioPath = audioPath + "Man_sandaiyidui";
+                        break;
+                    case 5:
+                        audioPath = audioPath + "Man_shunzi";
+                        break;
+                    case 6:
+                        audioPath = audioPath + "Man_liandui";
+                        break;
+                    case 7:
+                    case 8:
+                    case 9:
+                        audioPath = audioPath + "Man_feiji";
+                        break;
+                    case 10:
+                        audioPath = audioPath + "Man_zhadan";
+                        break;
+                    case 11:
+                        audioPath = audioPath + "Man_wangzha";
+                        break;
+                    case 12:
+                        audioPath = audioPath + "Man_sidaier";
+                        break;
+                    default:
+                        break;
+                }
+                audioSource.clip = Resources.Load<AudioClip>(audioPath);
+                audioSource.Play();
+            }
+            else
+            {
+                //要不起
+                string audioPath = "Sounds/Man_buyao";
+                audioPath = audioPath + UnityEngine.Random.Range(1, 5);
+                audioSource.clip = Resources.Load<AudioClip>(audioPath);
+                audioSource.Play();
+            }
+        }
+
         //处理左右玩家的出牌逻辑，出牌就显示具体的牌，不出就显示不出
         if (msgPlayCards.result)
         {
@@ -496,11 +561,24 @@ public class GamePanel : BasePanel
         //左右两边的玩家根据是否抢地主显示相关信息
         if (msgRobLandlord.isRob)
         {
+            //添加音效
+            //测试，只添加特定音效，后续再添加音效管理
+            //总共有三个抢地主音效
+            string audioPath = "Sounds/Man_Rob";
+            audioPath = audioPath + UnityEngine.Random.Range(1, 4);
+            audioSource.clip = Resources.Load<AudioClip>(audioPath);
+            audioSource.Play();
+
             GameManager.SyncDestroy(msgRobLandlord.id);
             GameManager.SyncGenerate(msgRobLandlord.id, "Word/RobLandlord");
         }
         else
         {
+            //不抢地主的音效
+            string audioPath = "Sounds/Man_NoRob";
+            audioSource.clip = Resources.Load<AudioClip>(audioPath);
+            audioSource.Play();
+
             GameManager.SyncDestroy(msgRobLandlord.id);
             GameManager.SyncGenerate(msgRobLandlord.id, "Word/NotRobLandlord");
         }
