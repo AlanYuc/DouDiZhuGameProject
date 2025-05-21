@@ -76,6 +76,7 @@ public class GamePanel : BasePanel
         NetManager.AddMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
         NetManager.AddMsgListener("MsgRobLandlord", OnMsgRobLandlord);
         NetManager.AddMsgListener("MsgPlayCards", OnMsgPlayCards);
+        NetManager.AddMsgListener("MsgWaitForNextGame", OnMsgWaitForNextGame);
 
         //添加按钮事件
         callLandlordButton.onClick.AddListener(OnCallLandlordButtonClick);
@@ -109,6 +110,7 @@ public class GamePanel : BasePanel
         NetManager.RemoveMsgListener("MsgStartRobLandlord", OnMsgStartRobLandlord);
         NetManager.RemoveMsgListener("MsgRobLandlord", OnMsgRobLandlord);
         NetManager.RemoveMsgListener("MsgPlayCards", OnMsgPlayCards);
+        NetManager.RemoveMsgListener("MsgWaitForNextGame", OnMsgWaitForNextGame);
     }
 
     public void OnMsgGetCardList(MsgBase msgBase)
@@ -134,7 +136,7 @@ public class GamePanel : BasePanel
         GenerateCard(cards);
 
         //获取三张底牌
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             Card card = new Card(msgGetCardList.threeCards[i].suit, msgGetCardList.threeCards[i].rank);
             GameManager.threeCards.Add(card);
@@ -518,7 +520,11 @@ public class GamePanel : BasePanel
             RevealThreeCards(GameManager.threeCards.ToArray());
             //切换玩家状态为出牌阶段
             GameManager.status = PlayerStatus.Play;
-            msgSwitchTurn.round = 0;
+
+            if(msgRobLandlord.landLordId == GameManager.playerId)
+            {
+                msgSwitchTurn.round = 0;
+            }
         }
 
         //抢地主的不是自己，后续逻辑不需要执行
@@ -540,6 +546,20 @@ public class GamePanel : BasePanel
             //msgSwitchTurn.round = 1;
             NetManager.Send(msgSwitchTurn);
             return;
+        }
+    }
+
+    /// <summary>
+    /// 准备重新开始下一局
+    /// </summary>
+    /// <param name="msgBase"></param>
+    public void OnMsgWaitForNextGame(MsgBase msgBase)
+    {
+        MsgWaitForNextGame msgWaitForNextGame = msgBase as MsgWaitForNextGame;
+
+        if (msgWaitForNextGame.result)
+        {
+            //TO DO
         }
     }
 
@@ -671,5 +691,18 @@ public class GamePanel : BasePanel
         MsgPlayCards msgPlayCards = new MsgPlayCards();
         msgPlayCards.isPlay = false;
         NetManager.Send(msgPlayCards);
+    }
+
+    /// <summary>
+    /// 结算界面点击"重新开始"后，等待下一把游戏开始，所有人都点"重新开始"后，下一把正式开始
+    /// </summary>
+    public void WaitForNextGame()
+    {
+        //标记正在等待其他玩家
+        GameManager.isWaitingForNextGame = true;
+
+        MsgWaitForNextGame msgWaitForNextGame = new MsgWaitForNextGame();
+        msgWaitForNextGame.isWait = true;
+        NetManager.Send(msgWaitForNextGame);
     }
 }
