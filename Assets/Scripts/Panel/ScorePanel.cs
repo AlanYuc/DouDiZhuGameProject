@@ -61,6 +61,10 @@ public class ScorePanel : BasePanel
             winResult = (int)para[0];
         }
 
+        //添加按钮事件
+        exitBtn.onClick.AddListener(OnExitButtonClick);
+        restartBtn.onClick.AddListener(OnRestartButtonClick);
+
         //先隐藏标题信息，根据玩家的胜负决定显示的内容
         farmersWinImgTrans.gameObject.SetActive(false);
         farmersLoseImgTrans.gameObject.SetActive(false);
@@ -140,15 +144,41 @@ public class ScorePanel : BasePanel
         //先获取欢乐豆数据
         for(int i = 0; i < msgGetBeansDelta.playerBeansInfos.Length; i++)
         {
-            playerBeansDelta.Add(msgGetBeansDelta.playerBeansInfos[i].playerId, msgGetBeansDelta.playerBeansInfos[i].beansDelta);
-        }
-
-        foreach(string id in playerBeansDelta.Keys)
-        {
-            Debug.Log("id 和 豆子 ：" + id + " " + playerBeansDelta[id]);
+            if (!playerBeansDelta.ContainsKey(msgGetBeansDelta.playerBeansInfos[i].playerId))
+            {
+                playerBeansDelta.Add(msgGetBeansDelta.playerBeansInfos[i].playerId, msgGetBeansDelta.playerBeansInfos[i].beansDelta);
+            }
+            else
+            {
+                playerBeansDelta[msgGetBeansDelta.playerBeansInfos[i].playerId] = msgGetBeansDelta.playerBeansInfos[i].beansDelta;
+            }
         }
 
         //更新结算面板的信息
         ShowPlayersInfo(msgGetBeansDelta.playerBeansInfos[0].multiplier);
+    }
+
+    public void OnExitButtonClick()
+    {
+        PanelManager.Open<TipPanel>("对局结束，正在返回房间");
+        PanelManager.Open<RoomPanel>();
+        PanelManager.Close("GamePanel");
+
+        //退出本局游戏后回到房间，需要清空上局游戏玩家的牌。
+        GameManager.cards.Clear();
+        GameManager.threeCards.Clear();
+        GameManager.isLandLord = false;
+
+        //重置为叫地主的状态，方便下一次游戏
+        GameManager.status = PlayerStatus.Call;
+        Close();
+    }
+
+    public void OnRestartButtonClick()
+    {
+        GamePanel gamePanel = transform.GetComponent<GamePanel>();
+        gamePanel.WaitForNextGame();
+
+        Close();
     }
 }
