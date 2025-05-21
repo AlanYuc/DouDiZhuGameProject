@@ -65,6 +65,9 @@ public class ScorePanel : BasePanel
         exitBtn.onClick.AddListener(OnExitButtonClick);
         restartBtn.onClick.AddListener(OnRestartButtonClick);
 
+        //TO DO... 先关闭，后面再说
+        restartBtn.enabled = false;
+
         //先隐藏标题信息，根据玩家的胜负决定显示的内容
         farmersWinImgTrans.gameObject.SetActive(false);
         farmersLoseImgTrans.gameObject.SetActive(false);
