@@ -90,6 +90,10 @@ public class GameManager : MonoBehaviour
     /// 是否允许不出牌。true表示可以不出，显示不出的按钮。
     /// </summary>
     public static bool canNotPlay;
+    /// <summary>
+    /// 是否点击"重新开始"，等待其他玩家
+    /// </summary>
+    public static bool isWaitingForNextGame = false;
 
     void Start()
     {
