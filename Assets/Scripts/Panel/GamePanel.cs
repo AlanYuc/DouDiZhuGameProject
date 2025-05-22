@@ -426,54 +426,9 @@ public class GamePanel : BasePanel
             return;
         }
 
-        //处理音效
         if (msgPlayCards.result)
         {
-            if (msgPlayCards.isPlay)
-            {
-                string audioPath = "Sounds/";
-                switch (msgPlayCards.cardType)
-                {
-                    case 3:
-                        audioPath = audioPath + "Man_sandaiyi";
-                        break;
-                    case 4:
-                        audioPath = audioPath + "Man_sandaiyidui";
-                        break;
-                    case 5:
-                        audioPath = audioPath + "Man_shunzi";
-                        break;
-                    case 6:
-                        audioPath = audioPath + "Man_liandui";
-                        break;
-                    case 7:
-                    case 8:
-                    case 9:
-                        audioPath = audioPath + "Man_feiji";
-                        break;
-                    case 10:
-                        audioPath = audioPath + "Man_zhadan";
-                        break;
-                    case 11:
-                        audioPath = audioPath + "Man_wangzha";
-                        break;
-                    case 12:
-                        audioPath = audioPath + "Man_sidaier";
-                        break;
-                    default:
-                        break;
-                }
-                audioSource.clip = Resources.Load<AudioClip>(audioPath);
-                audioSource.Play();
-            }
-            else
-            {
-                //要不起
-                string audioPath = "Sounds/Man_buyao";
-                audioPath = audioPath + UnityEngine.Random.Range(1, 5);
-                audioSource.clip = Resources.Load<AudioClip>(audioPath);
-                audioSource.Play();
-            }
+            AudioPlay(msgPlayCards.cardType, msgPlayCards.isPlay);
         }
 
         //处理左右玩家的出牌逻辑，出牌就显示具体的牌，不出就显示不出
@@ -782,5 +737,87 @@ public class GamePanel : BasePanel
         MsgWaitForNextGame msgWaitForNextGame = new MsgWaitForNextGame();
         msgWaitForNextGame.isWait = true;
         NetManager.Send(msgWaitForNextGame);
+    }
+
+    public void AudioPlay(int playType,bool isPlay)
+    {
+        //处理音效
+        if (isPlay)
+        {
+            string audioPath = "Sounds/";
+            switch (playType)
+            {
+                case 0:
+                    
+                    audioPath = audioPath + "Man_" + AudioRank((int)GameManager.selectCards[0].rank);
+                    break;
+                case 1:
+                    audioPath = audioPath + "Man_dui" + AudioRank((int)GameManager.selectCards[0].rank);
+                    break;
+                case 2:
+                    audioPath = audioPath + "Man_tuple" + AudioRank((int)GameManager.selectCards[0].rank);
+                    break;
+                case 3:
+                    audioPath = audioPath + "Man_sandaiyi";
+                    break;
+                case 4:
+                    audioPath = audioPath + "Man_sandaiyidui";
+                    break;
+                case 5:
+                    audioPath = audioPath + "Man_shunzi";
+                    break;
+                case 6:
+                    audioPath = audioPath + "Man_liandui";
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    audioPath = audioPath + "Man_feiji";
+                    break;
+                case 10:
+                    audioPath = audioPath + "Man_zhadan";
+                    break;
+                case 11:
+                    audioPath = audioPath + "Man_wangzha";
+                    break;
+                case 12:
+                    audioPath = audioPath + "Man_sidaier";
+                    break;
+                default:
+                    break;
+            }
+            audioSource.clip = Resources.Load<AudioClip>(audioPath);
+            audioSource.Play();
+        }
+        else
+        {
+            //要不起
+            string audioPath = "Sounds/Man_buyao";
+            audioPath = audioPath + UnityEngine.Random.Range(1, 5);
+            audioSource.clip = Resources.Load<AudioClip>(audioPath);
+            audioSource.Play();
+        }
+    }
+
+    /// <summary>
+    /// card中的牌的大小和资源中的音频稍微有些不同，不想动资源因此代码调整一下
+    /// </summary>
+    /// <param name="rank"></param>
+    public int AudioRank(int rank)
+    {
+        //3-K
+        if (rank <= 10)
+        {
+            return rank + 3;
+        }
+
+        //A,2
+        if(rank >=11 && rank <= 12)
+        {
+            return rank - 10;
+        }
+
+        //小王，大王
+        return rank + 1;
     }
 }
