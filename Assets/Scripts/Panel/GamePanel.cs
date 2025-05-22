@@ -428,7 +428,15 @@ public class GamePanel : BasePanel
 
         if (msgPlayCards.result)
         {
-            AudioPlay(msgPlayCards.cardType, msgPlayCards.isPlay);
+            if (msgPlayCards.cardType <= 2) 
+            {
+                Card card = new Card(msgPlayCards.cardInfos[0].suit, msgPlayCards.cardInfos[0].rank);
+                AudioPlay(msgPlayCards.cardType, msgPlayCards.isPlay, card);
+            }
+            else
+            {
+                AudioPlay(msgPlayCards.cardType, msgPlayCards.isPlay);
+            }
         }
 
         //处理左右玩家的出牌逻辑，出牌就显示具体的牌，不出就显示不出
@@ -739,7 +747,7 @@ public class GamePanel : BasePanel
         NetManager.Send(msgWaitForNextGame);
     }
 
-    public void AudioPlay(int playType,bool isPlay)
+    public void AudioPlay(int playType, bool isPlay, Card card = null)
     {
         //处理音效
         if (isPlay)
@@ -748,14 +756,13 @@ public class GamePanel : BasePanel
             switch (playType)
             {
                 case 0:
-                    
-                    audioPath = audioPath + "Man_" + AudioRank((int)GameManager.selectCards[0].rank);
+                    audioPath = audioPath + "Man_" + AudioRank((int)card.rank);
                     break;
                 case 1:
-                    audioPath = audioPath + "Man_dui" + AudioRank((int)GameManager.selectCards[0].rank);
+                    audioPath = audioPath + "Man_dui" + AudioRank((int)card.rank);
                     break;
                 case 2:
-                    audioPath = audioPath + "Man_tuple" + AudioRank((int)GameManager.selectCards[0].rank);
+                    audioPath = audioPath + "Man_tuple" + AudioRank((int)card.rank);
                     break;
                 case 3:
                     audioPath = audioPath + "Man_sandaiyi";
