@@ -189,6 +189,7 @@ public class ScorePanel : BasePanel
         GameManager.cards.Clear();
         GameManager.threeCards.Clear();
         GameManager.isLandLord = false;
+        GameManager.canNotPlay = false;
 
         //重置为叫地主的状态，方便下一次游戏
         GameManager.status = PlayerStatus.Call;
