@@ -10,6 +10,7 @@ public class MsgGetBeansDelta : MsgBase
     /// 获取所有玩家及其欢乐豆变化
     /// </summary>
     public PlayerBeansInfo[] playerBeansInfos = new PlayerBeansInfo[3];
+    public string id;
 
     public MsgGetBeansDelta()
     {

@@ -95,6 +95,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static bool isWaitingForNextGame = false;
 
+    #region ¥¶¿Ìscore panel
+    public static GameObject player1ScoreInfo;
+    public static GameObject player2ScoreInfo;
+    public static GameObject player3ScoreInfo;
+    public static Dictionary<string, Transform> playersDic = new Dictionary<string, Transform>();
+    public static GameObject farmersWinImgObj;
+    public static GameObject farmersLoseImgObj;
+    public static GameObject landlordWinImgObj;
+    public static GameObject landlordLoseImgObj;
+    public static AudioSource audioSource;
+    #endregion
+
     void Start()
     {
         NetManager.AddEventListener(NetManager.NetEvent.Close, OnConnectClose);

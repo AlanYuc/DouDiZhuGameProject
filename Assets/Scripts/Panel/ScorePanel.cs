@@ -5,13 +5,6 @@ using UnityEngine.UI;
 
 public class ScorePanel : BasePanel
 {
-    private Transform farmersWinImgTrans;
-    private Transform farmersLoseImgTrans;
-    private Transform landlordWinImgTrans;
-    private Transform landlordLoseImgTrans;
-    private Transform player1Trans;
-    private Transform player2Trans;
-    private Transform player3Trans;
     private Button exitBtn;
     private Button restartBtn;
     /// <summary>
@@ -27,10 +20,6 @@ public class ScorePanel : BasePanel
     /// 储存结算界面每个玩家的欢乐豆变化数据
     /// </summary>
     private Dictionary<string , int> playerBeansDelta = new Dictionary<string , int>();
-    /// <summary>
-    /// 管理音效
-    /// </summary>
-    private AudioSource audioSource;
 
 
     public override void OnInit()
@@ -42,22 +31,34 @@ public class ScorePanel : BasePanel
     public override void OnShow(params object[] para)
     {
         //寻找组件
-        farmersWinImgTrans      = skin.transform.Find("Title_Img/FarmersWin");
-        farmersLoseImgTrans     = skin.transform.Find("Title_Img/FarmersLose");
-        landlordWinImgTrans     = skin.transform.Find("Title_Img/LandlordWin");
-        landlordLoseImgTrans    = skin.transform.Find("Title_Img/LandlordLose");
-        player1Trans            = skin.transform.Find("GameResult/Player1");
-        player2Trans            = skin.transform.Find("GameResult/Player2");
-        player3Trans            = skin.transform.Find("GameResult/Player3");
-        exitBtn                 = skin.transform.Find("Exit_Btn").GetComponent<Button>();
-        restartBtn              = skin.transform.Find("Restart_Btn").GetComponent<Button>();
-        audioSource             = skin.transform.Find("Audio Source").GetComponent<AudioSource>();
+        GameManager.farmersWinImgObj    = skin.transform.Find("Title_Img/FarmersWin").gameObject;
+        GameManager.farmersLoseImgObj   = skin.transform.Find("Title_Img/FarmersLose").gameObject;
+        GameManager.landlordWinImgObj   = skin.transform.Find("Title_Img/LandlordWin").gameObject;
+        GameManager.landlordLoseImgObj  = skin.transform.Find("Title_Img/LandlordLose").gameObject;
+        GameManager.player1ScoreInfo    = skin.transform.Find("GameResult/Player1").gameObject;
+        GameManager.player2ScoreInfo    = skin.transform.Find("GameResult/Player2").gameObject;
+        GameManager.player3ScoreInfo    = skin.transform.Find("GameResult/Player3").gameObject;
+        exitBtn                         = skin.transform.Find("Exit_Btn").GetComponent<Button>();
+        restartBtn                      = skin.transform.Find("Restart_Btn").GetComponent<Button>();
+        GameManager.audioSource         = skin.transform.Find("Audio Source").GetComponent<AudioSource>();
+
+
+        /*
+         * 这里出了点问题，第一次使用没问题，但是第二次打开后，
+         * playersDic添加后，在消息回调函数内，所有的transform都变成null了
+         * 将字典整个放到GameManager下才解决这个问题，其他的farmersWinImgTrans都是同一个问题
+         */
+
+        //playersDic.Clear();
+        //playersDic.Add(GameManager.playerId, GameManager.player1ScoreInfo.transform);
+        //playersDic.Add(GameManager.leftPlayerId, GameManager.player2ScoreInfo.transform);
+        //playersDic.Add(GameManager.rightPlayerId, GameManager.player3ScoreInfo.transform);
 
         //将玩家和结算面板玩家信息部分绑定
-        playersDic.Clear();
-        playersDic.Add(GameManager.playerId, player1Trans);
-        playersDic.Add(GameManager.leftPlayerId, player2Trans);
-        playersDic.Add(GameManager.rightPlayerId, player3Trans);
+        GameManager.playersDic.Clear();
+        GameManager.playersDic.Add(GameManager.playerId, GameManager.player1ScoreInfo.transform);
+        GameManager.playersDic.Add(GameManager.leftPlayerId, GameManager.player2ScoreInfo.transform);
+        GameManager.playersDic.Add(GameManager.rightPlayerId, GameManager.player3ScoreInfo.transform);
 
         playerBeansDelta.Clear();
 
@@ -74,10 +75,10 @@ public class ScorePanel : BasePanel
         restartBtn.enabled = false;
 
         //先隐藏标题信息，根据玩家的胜负决定显示的内容
-        farmersWinImgTrans.gameObject.SetActive(false);
-        farmersLoseImgTrans.gameObject.SetActive(false);
-        landlordWinImgTrans.gameObject.SetActive(false);
-        landlordLoseImgTrans.gameObject.SetActive(false);
+        GameManager.farmersWinImgObj.SetActive(false);
+        GameManager.farmersLoseImgObj.SetActive(false);
+        GameManager.landlordWinImgObj.SetActive(false);
+        GameManager.landlordLoseImgObj.SetActive(false);
 
         //网络协议更新
         NetManager.AddMsgListener("MsgGetBeansDelta", OnMsgGetBeansDelta);
@@ -95,11 +96,11 @@ public class ScorePanel : BasePanel
     public void ShowPlayersInfo(int multiplier)
     {
         //显示结算面板数据
-        foreach(string id in playersDic.Keys)
+        foreach (string id in GameManager.playersDic.Keys)
         {
-            Text idText = playersDic[id].Find("ID_Text").GetComponent<Text>();
-            Text multiplierText = playersDic[id].Find("Multiplier_Text").GetComponent<Text>();
-            Text beanText = playersDic[id].Find("Bean_Text").GetComponent<Text>();
+            Text idText = GameManager.playersDic[id].Find("ID_Text").GetComponent<Text>();
+            Text multiplierText = GameManager.playersDic[id].Find("Multiplier_Text").GetComponent<Text>();
+            Text beanText = GameManager.playersDic[id].Find("Bean_Text").GetComponent<Text>();
 
             idText.text = id;
             multiplierText.text = multiplier.ToString();
@@ -114,19 +115,19 @@ public class ScorePanel : BasePanel
             //地主获胜
             if (GameManager.isLandLord)
             {
-                farmersWinImgTrans.gameObject.SetActive(false);
-                farmersLoseImgTrans.gameObject.SetActive(false);
-                landlordWinImgTrans.gameObject.SetActive(true);
-                landlordLoseImgTrans.gameObject.SetActive(false);
+                GameManager.farmersWinImgObj.gameObject.SetActive(false);
+                GameManager.farmersLoseImgObj.gameObject.SetActive(false);
+                GameManager.landlordWinImgObj.gameObject.SetActive(true);
+                GameManager.landlordLoseImgObj.gameObject.SetActive(false);
 
                 audioPath = audioPath + "MusicEx_Win";
             }
             else
             {
-                farmersWinImgTrans.gameObject.SetActive(false);
-                farmersLoseImgTrans.gameObject.SetActive(true);
-                landlordWinImgTrans.gameObject.SetActive(false);
-                landlordLoseImgTrans.gameObject.SetActive(false);
+                GameManager.farmersWinImgObj.gameObject.SetActive(false);
+                GameManager.farmersLoseImgObj.gameObject.SetActive(true);
+                GameManager.landlordWinImgObj.gameObject.SetActive(false);
+                GameManager.landlordLoseImgObj.gameObject.SetActive(false);
 
                 audioPath = audioPath + "MusicEx_Lose";
             }
@@ -136,26 +137,26 @@ public class ScorePanel : BasePanel
             //winResult == 1 农民获胜
             if (GameManager.isLandLord)
             {
-                farmersWinImgTrans.gameObject.SetActive(false);
-                farmersLoseImgTrans.gameObject.SetActive(false);
-                landlordWinImgTrans.gameObject.SetActive(false);
-                landlordLoseImgTrans.gameObject.SetActive(true);
+                GameManager.farmersWinImgObj.gameObject.SetActive(false);
+                GameManager.farmersLoseImgObj.gameObject.SetActive(false);
+                GameManager.landlordWinImgObj.gameObject.SetActive(false);
+                GameManager.landlordLoseImgObj.gameObject.SetActive(true);
 
                 audioPath = audioPath + "MusicEx_Lose";
             }
             else
             {
-                farmersWinImgTrans.gameObject.SetActive(true);
-                farmersLoseImgTrans.gameObject.SetActive(false);
-                landlordWinImgTrans.gameObject.SetActive(false);
-                landlordLoseImgTrans.gameObject.SetActive(false);
+                GameManager.farmersWinImgObj.gameObject.SetActive(true);
+                GameManager.farmersLoseImgObj.gameObject.SetActive(false);
+                GameManager.landlordWinImgObj.gameObject.SetActive(false);
+                GameManager.landlordLoseImgObj.gameObject.SetActive(false);
 
                 audioPath = audioPath + "MusicEx_Win";
             }
         }
 
-        audioSource.clip = Resources.Load<AudioClip>(audioPath);
-        audioSource.Play();
+        GameManager.audioSource.clip = Resources.Load<AudioClip>(audioPath);
+        GameManager.audioSource.Play();
     }
 
     public void OnMsgGetBeansDelta(MsgBase msgBase)
@@ -173,6 +174,11 @@ public class ScorePanel : BasePanel
             {
                 playerBeansDelta[msgGetBeansDelta.playerBeansInfos[i].playerId] = msgGetBeansDelta.playerBeansInfos[i].beansDelta;
             }
+        }
+
+        if(msgGetBeansDelta.id != GameManager.playerId)
+        {
+            return;
         }
 
         //更新结算面板的信息
