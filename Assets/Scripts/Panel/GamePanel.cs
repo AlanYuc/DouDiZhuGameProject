@@ -423,7 +423,7 @@ public class GamePanel : BasePanel
         if(msgPlayCards.win == 1 || msgPlayCards.win == 2)
         {
             PanelManager.Open<ScorePanel>(msgPlayCards.win);
-            return;
+            //return;
         }
 
         if (msgPlayCards.result)
